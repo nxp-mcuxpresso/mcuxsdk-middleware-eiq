@@ -11,7 +11,7 @@
     <definition extID="evkbmimxrt1170"/>
     <definition extID="evkmimxrt1170"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" name="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" version="2.15.0" revision="2.15.0"/>
+  <ksdk id="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" name="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" version="2.15.100" revision="2.15.100"/>
   <components>
     <component id="middleware.eiq.glow.MIMXRT1176" name="Glow utils" brief="Utilities for Glow NN compiler." version="1.0.0" full_name="Glow Utils" category="Machine Learning/glow" user_visible="true" type="middleware" package_base_path=".././" project_base_path="eiq">
       <dependencies>

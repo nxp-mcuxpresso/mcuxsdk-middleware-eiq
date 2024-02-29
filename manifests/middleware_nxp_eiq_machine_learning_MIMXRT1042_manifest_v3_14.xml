@@ -9,7 +9,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="evkmimxrt1040"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" name="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" version="2.15.0" revision="2.15.0"/>
+  <ksdk id="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" name="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" version="2.15.100" revision="2.15.100"/>
   <components>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1042" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>

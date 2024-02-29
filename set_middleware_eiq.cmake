@@ -546,22 +546,6 @@ if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND CONF
   )
 endif()
 
-if(CONFIG_TOOLCHAIN STREQUAL xcc AND CONFIG_CORE_ID STREQUAL hifi4)
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/lib/hifi4/xcc/libtflm.a
-      -Wl,--end-group
-  )
-endif()
-
-if(CONFIG_TOOLCHAIN STREQUAL xcc AND CONFIG_CORE_ID STREQUAL fusionf1)
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/lib/fusionf1/xcc/libtflm.a
-      -Wl,--end-group
-  )
-endif()
-
 else()
 
 message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_binary dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
@@ -783,81 +767,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 else()
 
 message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_reference dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_xtensa)
-# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_xtensa true) in config.cmake to use this component
-
-message("middleware_eiq_tensorflow_lite_micro_xtensa component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S) OR (CONFIG_CORE STREQUAL dsp)) AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_common_xtensa.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_hifi.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_int16.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_hifi.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected_common_xtensa.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected_int8.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/leaky_relu.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/logistic.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pad.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pad_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling_int8.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/quantize.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/reduce.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/reduce_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/reshape.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/reshape_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/softmax.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/softmax_int8_int16.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/softmax_vision.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/strided_slice.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/sub.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/svdf.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/unidirectional_sequence_lstm.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/floor.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/mul.cpp
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/.
-)
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
-  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DXTENSA
-    -DHIFI4
-  )
-
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_xtensa dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -1174,55 +1083,6 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
-# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true) in config.cmake to use this component
-
-message("middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if(((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S) OR (CONFIG_CORE STREQUAL dsp)))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/.
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/include/nnlib
-)
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
-  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DNNLIB_V2
-    -DMODEL_INT16
-    -Dhifi4
-  )
-
-endif()
-
-if(CONFIG_CORE_ID STREQUAL fusionf1)
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt595s/libxa_nnlib_hifi4.a
-      -Wl,--end-group
-  )
-endif()
-
-if(CONFIG_CORE_ID STREQUAL hifi4)
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt685s/libxa_nnlib_hifi4.a
-      -Wl,--end-group
-  )
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
 
 endif()
 

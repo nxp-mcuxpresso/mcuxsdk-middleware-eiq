@@ -13,6 +13,30 @@
   </externalDefinitions>
   <ksdk id="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" name="MCUXpressoSDK215100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" version="2.15.100" revision="2.15.100"/>
   <components>
+    <component id="middleware.eiq.glow.MIMXRT1176" name="Glow utils" brief="Utilities for Glow NN compiler." version="1.0.0" full_name="Glow Utils" category="Machine Learning/glow" user_visible="true" type="middleware" package_base_path=".././" project_base_path="eiq">
+      <dependencies>
+        <device_dependency value="MIMXRT1176xxxxx"/>
+      </dependencies>
+      <source relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include">
+        <files mask="glow_bundle_utils.h"/>
+      </source>
+      <source relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="src">
+        <files mask="glow_bundle_utils.c"/>
+      </source>
+      <source relative_path="./glow" project_relative_path="glow" type="doc">
+        <files mask="readme.txt"/>
+        <files mask="LICENSE.txt"/>
+      </source>
+      <source relative_path="./glow/examples/common" project_relative_path="glow/examples/common" type="script">
+        <files mask="glow_process_image.py"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_glow.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1176" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <device_dependency value="MIMXRT1176xxxxx"/>
@@ -147,30 +171,6 @@
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.eiq.glow.MIMXRT1176" name="Glow utils" brief="Utilities for Glow NN compiler." version="1.0.0" full_name="Glow Utils" category="Machine Learning/glow" user_visible="true" type="middleware" package_base_path=".././" project_base_path="eiq">
-      <dependencies>
-        <device_dependency value="MIMXRT1176xxxxx"/>
-      </dependencies>
-      <source relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include">
-        <files mask="glow_bundle_utils.h"/>
-      </source>
-      <source relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="src">
-        <files mask="glow_bundle_utils.c"/>
-      </source>
-      <source relative_path="./glow" project_relative_path="glow" type="doc">
-        <files mask="readme.txt"/>
-        <files mask="LICENSE.txt"/>
-      </source>
-      <source relative_path="./glow/examples/common" project_relative_path="glow/examples/common" type="script">
-        <files mask="glow_process_image.py"/>
-      </source>
-      <source toolchain="armgcc" relative_path="./" type="workspace">
-        <files mask="middleware_eiq_glow.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./glow/bundle_utils" project_relative_path="glow/bundle_utils" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.eiq.mpp.MIMXRT1176" name="MPP library" brief="Multimedia Processing Pipelines Library" version="2.1.0" full_name="Multimedia Processing Pipelines Library" category="Machine Learning/mpp" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">

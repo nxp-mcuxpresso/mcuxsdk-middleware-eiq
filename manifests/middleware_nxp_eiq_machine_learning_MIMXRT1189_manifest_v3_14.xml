@@ -1,0 +1,1288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT1189_manifest_v3_14" name="eIQ" brief="eIQ machine learning SDK containing: - ARM CMSIS-NN library (neural network kernels optimized  for Cortex-M cores) - an inference engine for running TensorFlow Lite models - project examples for the Glow NN Compiler" format_version="3.14" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.14.xsd">
+
+  <externalDefinitions>
+    <definition extID="MIMXRT1189xxxxx"/>
+    <definition extID="armgcc"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1189"/>
+    <definition extID="cm33_MIMXRT1189xxxxx"/>
+    <definition extID="cm7_MIMXRT1189xxxxx"/>
+    <definition extID="mcuxpresso"/>
+  </externalDefinitions>
+  <ksdk id="MCUXpressoSDK215001_middleware_nxp_eiq_machine_learning_MIMXRT1189_manifest_v3_14" name="MCUXpressoSDK215001_middleware_nxp_eiq_machine_learning_MIMXRT1189_manifest_v3_14" version="2.15.001" revision="2.15.001"/>
+  <components>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1189" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="./tensorflow-lite/third_party/flatbuffers" project_relative_path="third_party/flatbuffers" type="doc">
+        <files mask="readme.md"/>
+        <files mask="LICENSE.txt"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/flatbuffers/include/flatbuffers" project_relative_path="third_party/flatbuffers/include/flatbuffers" type="c_include">
+        <files mask="allocator.h"/>
+        <files mask="array.h"/>
+        <files mask="base.h"/>
+        <files mask="buffer.h"/>
+        <files mask="buffer_ref.h"/>
+        <files mask="default_allocator.h"/>
+        <files mask="detached_buffer.h"/>
+        <files mask="flatbuffer_builder.h"/>
+        <files mask="flatbuffers.h"/>
+        <files mask="flexbuffers.h"/>
+        <files mask="stl_emulation.h"/>
+        <files mask="strings.h"/>
+        <files mask="struct.h"/>
+        <files mask="table.h"/>
+        <files mask="util.h"/>
+        <files mask="vector.h"/>
+        <files mask="vector_downward.h"/>
+        <files mask="verifier.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./tensorflow-lite/third_party/flatbuffers/include" project_relative_path="third_party/flatbuffers/include" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1189" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="doc">
+        <files mask="LICENSE"/>
+        <files mask="README.md"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/gemmlowp/fixedpoint" project_relative_path="third_party/gemmlowp/fixedpoint" type="c_include">
+        <files mask="fixedpoint.h"/>
+        <files mask="fixedpoint_neon.h"/>
+        <files mask="fixedpoint_sse.h"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/gemmlowp/internal" project_relative_path="third_party/gemmlowp/internal" type="c_include">
+        <files mask="detect_platform.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1189" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="doc">
+        <files mask="LICENSE"/>
+        <files mask="README.md"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/ruy/ruy/profiler" project_relative_path="third_party/ruy/ruy/profiler" type="c_include">
+        <files mask="instrumentation.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_ruy.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT1189" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="src">
+        <files mask="fftsg.c"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="c_include">
+        <files mask="fft.h"/>
+        <files mask="fft2d.h"/>
+      </source>
+      <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="doc">
+        <files mask="readme.txt"/>
+        <files mask="LICENSE"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_fft2d.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1189" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="./" type="src">
+        <files mask="kiss_fft.c"/>
+      </source>
+      <source relative_path="./" type="c_include">
+        <files mask="_kiss_fft_guts.h"/>
+        <files mask="kiss_fft.h"/>
+      </source>
+      <source relative_path="./" type="other">
+        <files mask="kissfft.hh"/>
+      </source>
+      <source relative_path="../../../tools" project_relative_path="tools" type="src">
+        <files mask="kfc.c"/>
+        <files mask="kiss_fastfir.c"/>
+        <files mask="kiss_fftnd.c"/>
+        <files mask="kiss_fftndr.c"/>
+        <files mask="kiss_fftr.c"/>
+      </source>
+      <source relative_path="../../../tools" project_relative_path="tools" type="c_include">
+        <files mask="kfc.h"/>
+        <files mask="kiss_fftnd.h"/>
+        <files mask="kiss_fftndr.h"/>
+        <files mask="kiss_fftr.h"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="COPYING"/>
+        <files mask="README"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_kissfft.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT1189" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.9.0" full_name="Xtensa HiFi4 NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
+      <defines>
+        <define name="NNLIB_V2" value=""/>
+        <define name="MODEL_INT16" value=""/>
+        <define name="hifi4" value=""/>
+      </defines>
+      <dependencies>
+        <device_dependency value="MIMXRT1189xxxxx"/>
+      </dependencies>
+      <source relative_path="../../../algo/common/include" project_relative_path="algo/common/include" type="c_include">
+        <files mask="xa_api_defs.h"/>
+        <files mask="xa_nnlib_common.h"/>
+        <files mask="xa_nnlib_common_internal.h"/>
+        <files mask="xa_nnlib_common_macros.h"/>
+        <files mask="xa_nnlib_definitions.h"/>
+        <files mask="xa_nnlib_err_chk.h"/>
+        <files mask="xa_nnlib_hifi_isa_compat.h"/>
+        <files mask="xa_nnlib_quant_macros.h"/>
+      </source>
+      <source relative_path="../../../algo/common/src" project_relative_path="algo/common/src" type="src">
+        <files mask="xa_nnlib_common_api.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/activations/hifi4" project_relative_path="algo/kernels/activations/hifi4" type="src">
+        <files mask="xa_nn_activations_16_16.c"/>
+        <files mask="xa_nn_activations_32_16.c"/>
+        <files mask="xa_nn_activations_32_32.c"/>
+        <files mask="xa_nn_activations_32_8.c"/>
+        <files mask="xa_nn_activations_8_8.c"/>
+        <files mask="xa_nn_activations_asym16_asym16.c"/>
+        <files mask="xa_nn_activations_asym8_asym8.c"/>
+        <files mask="xa_nn_activations_f32_f32.c"/>
+        <files mask="xa_nn_softmax_asym8_asym8.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/basic/hifi4" project_relative_path="algo/kernels/basic/hifi4" type="src">
+        <files mask="xa_nn_broadcast_8_8.c"/>
+        <files mask="xa_nn_dot_prod_16x16.c"/>
+        <files mask="xa_nn_elm_abs_f32.c"/>
+        <files mask="xa_nn_elm_add_f32.c"/>
+        <files mask="xa_nn_elm_add_quant16.c"/>
+        <files mask="xa_nn_elm_add_quant8.c"/>
+        <files mask="xa_nn_elm_ceil_f32.c"/>
+        <files mask="xa_nn_elm_compare_quant8.c"/>
+        <files mask="xa_nn_elm_cosine_f32.c"/>
+        <files mask="xa_nn_elm_div_f32.c"/>
+        <files mask="xa_nn_elm_logical_bool.c"/>
+        <files mask="xa_nn_elm_logn_f32.c"/>
+        <files mask="xa_nn_elm_minmax_8.c"/>
+        <files mask="xa_nn_elm_mul_16x16.c"/>
+        <files mask="xa_nn_elm_mul_acc_f32.c"/>
+        <files mask="xa_nn_elm_mul_f32.c"/>
+        <files mask="xa_nn_elm_mul_quant8.c"/>
+        <files mask="xa_nn_elm_neg_f32.c"/>
+        <files mask="xa_nn_elm_quantize.c"/>
+        <files mask="xa_nn_elm_round_f32.c"/>
+        <files mask="xa_nn_elm_rsqrt_f32.c"/>
+        <files mask="xa_nn_elm_sine_f32.c"/>
+        <files mask="xa_nn_elm_sqrt_f32.c"/>
+        <files mask="xa_nn_elm_square_f32.c"/>
+        <files mask="xa_nn_elm_squared_diff_quant8.c"/>
+        <files mask="xa_nn_elm_sub_f32.c"/>
+        <files mask="xa_nn_elm_sub_quant16.c"/>
+        <files mask="xa_nn_elm_sub_quant8.c"/>
+        <files mask="xa_nn_floor_f32.c"/>
+        <files mask="xa_nn_memmove.c"/>
+        <files mask="xa_nn_memmove_16.c"/>
+        <files mask="xa_nn_memset_f32.c"/>
+        <files mask="xa_nn_reduce_asym8s_asym8s.c"/>
+        <files mask="xa_nn_vec_interpolation_q15.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/basic/hifi4" project_relative_path="algo/kernels/basic/hifi4" type="c_include">
+        <files mask="xa_nn_basic_state.h"/>
+      </source>
+      <source relative_path="../../../algo/kernels/cnn/hifi4" project_relative_path="algo/kernels/cnn/hifi4" type="src">
+        <files mask="xa_nn_circ_buf.c"/>
+        <files mask="xa_nn_conv1d_std_16x16.c"/>
+        <files mask="xa_nn_conv1d_std_8x16.c"/>
+        <files mask="xa_nn_conv1d_std_8x8.c"/>
+        <files mask="xa_nn_conv1d_std_asym8xasym8.c"/>
+        <files mask="xa_nn_conv1d_std_circ_buf.c"/>
+        <files mask="xa_nn_conv1d_std_f32.c"/>
+        <files mask="xa_nn_conv2d_depthwise.c"/>
+        <files mask="xa_nn_conv2d_depthwise_16x16.c"/>
+        <files mask="xa_nn_conv2d_depthwise_8x16.c"/>
+        <files mask="xa_nn_conv2d_depthwise_8x8.c"/>
+        <files mask="xa_nn_conv2d_depthwise_asym8xasym8.c"/>
+        <files mask="xa_nn_conv2d_depthwise_f32.c"/>
+        <files mask="xa_nn_conv2d_depthwise_sym8sxasym8s.c"/>
+        <files mask="xa_nn_conv2d_depthwise_sym8sxsym16s.c"/>
+        <files mask="xa_nn_conv2d_pointwise_16x16.c"/>
+        <files mask="xa_nn_conv2d_pointwise_8x16.c"/>
+        <files mask="xa_nn_conv2d_pointwise_8x8.c"/>
+        <files mask="xa_nn_conv2d_pointwise_asym8xasym8.c"/>
+        <files mask="xa_nn_conv2d_pointwise_f32.c"/>
+        <files mask="xa_nn_conv2d_pointwise_sym8sxasym8s.c"/>
+        <files mask="xa_nn_conv2d_pointwise_sym8sxsym16s.c"/>
+        <files mask="xa_nn_conv2d_std_16x16.c"/>
+        <files mask="xa_nn_conv2d_std_8x16.c"/>
+        <files mask="xa_nn_conv2d_std_8x8.c"/>
+        <files mask="xa_nn_conv2d_std_asym8xasym8.c"/>
+        <files mask="xa_nn_conv2d_std_circ_buf.c"/>
+        <files mask="xa_nn_conv2d_std_f32.c"/>
+        <files mask="xa_nn_conv2d_std_sym8sxasym8s.c"/>
+        <files mask="xa_nn_conv2d_std_sym8sxsym16s.c"/>
+        <files mask="xa_nn_matXvec_16x16_16_circ.c"/>
+        <files mask="xa_nn_matXvec_16x16_16_circ_nb.c"/>
+        <files mask="xa_nn_matXvec_8x16_16_circ.c"/>
+        <files mask="xa_nn_matXvec_8x16_16_circ_nb.c"/>
+        <files mask="xa_nn_matXvec_8x8_8_circ.c"/>
+        <files mask="xa_nn_matXvec_8x8_8_circ_nb.c"/>
+        <files mask="xa_nn_matXvec_asym8xasym8_asym8_circ.c"/>
+        <files mask="xa_nn_matXvec_asym8xasym8_asym8_circ_nb.c"/>
+        <files mask="xa_nn_matXvec_f32_circ.c"/>
+        <files mask="xa_nn_matXvec_f32_circ_nb.c"/>
+        <files mask="xa_nn_matXvec_sym8sxasym8s_asym8s_circ.c"/>
+        <files mask="xa_nn_matXvec_sym8sxsym16s_sym16s_circ.c"/>
+        <files mask="xa_nn_transpose_conv_sym8sxsym16s.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/cnn/hifi4" project_relative_path="algo/kernels/cnn/hifi4" type="c_include">
+        <files mask="xa_nn_circ_buf.h"/>
+        <files mask="xa_nn_conv1d_std_state.h"/>
+        <files mask="xa_nn_conv2d_depthwise_state.h"/>
+        <files mask="xa_nn_conv2d_std_state.h"/>
+      </source>
+      <source relative_path="../../../algo/kernels/fc/hifi4" project_relative_path="algo/kernels/fc/hifi4" type="src">
+        <files mask="xa_nn_fully_connected.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/matXvec/hifi4" project_relative_path="algo/kernels/matXvec/hifi4" type="src">
+        <files mask="xa_nn_matXvec_16x16.c"/>
+        <files mask="xa_nn_matXvec_16x16_batch.c"/>
+        <files mask="xa_nn_matXvec_16x8.c"/>
+        <files mask="xa_nn_matXvec_8x16.c"/>
+        <files mask="xa_nn_matXvec_8x16_batch.c"/>
+        <files mask="xa_nn_matXvec_8x8.c"/>
+        <files mask="xa_nn_matXvec_8x8_batch.c"/>
+        <files mask="xa_nn_matXvec_asym8sxasym8s.c"/>
+        <files mask="xa_nn_matXvec_asym8xasym8.c"/>
+        <files mask="xa_nn_matXvec_asym8xasym8_batch.c"/>
+        <files mask="xa_nn_matXvec_f32.c"/>
+        <files mask="xa_nn_matXvec_f32_batch.c"/>
+        <files mask="xa_nn_matXvec_sym8sxasym8s.c"/>
+        <files mask="xa_nn_matXvec_sym8sxsym16s.c"/>
+        <files mask="xa_nn_matmul_16x16.c"/>
+        <files mask="xa_nn_matmul_8x16.c"/>
+        <files mask="xa_nn_matmul_8x8.c"/>
+        <files mask="xa_nn_matmul_asym8sxasym8s.c"/>
+        <files mask="xa_nn_matmul_asym8xasym8.c"/>
+        <files mask="xa_nn_matmul_f32.c"/>
+        <files mask="xa_nn_matmul_sym8sxasym8s.c"/>
+        <files mask="xa_nn_matmul_sym8sxsym16s.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/norm/hifi4" project_relative_path="algo/kernels/norm/hifi4" type="src">
+        <files mask="xa_nn_l2_norm_asym8s.c"/>
+        <files mask="xa_nn_l2_norm_f32.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/pool/hifi4" project_relative_path="algo/kernels/pool/hifi4" type="src">
+        <files mask="xa_nn_avgpool.c"/>
+        <files mask="xa_nn_avgpool_16.c"/>
+        <files mask="xa_nn_avgpool_16_nhwc.c"/>
+        <files mask="xa_nn_avgpool_8.c"/>
+        <files mask="xa_nn_avgpool_8_nhwc.c"/>
+        <files mask="xa_nn_avgpool_asym8.c"/>
+        <files mask="xa_nn_avgpool_asym8_nhwc.c"/>
+        <files mask="xa_nn_avgpool_f32.c"/>
+        <files mask="xa_nn_avgpool_f32_nhwc.c"/>
+        <files mask="xa_nn_inv_256_tbl.c"/>
+        <files mask="xa_nn_maxpool.c"/>
+        <files mask="xa_nn_maxpool_16.c"/>
+        <files mask="xa_nn_maxpool_16_nhwc.c"/>
+        <files mask="xa_nn_maxpool_8.c"/>
+        <files mask="xa_nn_maxpool_8_nhwc.c"/>
+        <files mask="xa_nn_maxpool_asym8.c"/>
+        <files mask="xa_nn_maxpool_asym8_nhwc.c"/>
+        <files mask="xa_nn_maxpool_f32.c"/>
+        <files mask="xa_nn_maxpool_f32_nhwc.c"/>
+      </source>
+      <source relative_path="../../../algo/kernels/pool/hifi4" project_relative_path="algo/kernels/pool/hifi4" type="c_include">
+        <files mask="xa_nn_avgpool_state.h"/>
+        <files mask="xa_nn_maxpool_state.h"/>
+      </source>
+      <source relative_path="../../../algo/kernels/reorg/hifi4" project_relative_path="algo/kernels/reorg/hifi4" type="src">
+        <files mask="xa_nn_batch_to_space_nd_8.c"/>
+        <files mask="xa_nn_depth_to_space_8.c"/>
+        <files mask="xa_nn_pad_16.c"/>
+        <files mask="xa_nn_pad_8.c"/>
+        <files mask="xa_nn_space_to_batch_nd_8.c"/>
+        <files mask="xa_nn_space_to_depth_8.c"/>
+        <files mask="xa_nn_stride_slice_int16.c"/>
+        <files mask="xa_nn_stride_slice_int8.c"/>
+      </source>
+      <source relative_path="../../../algo/ndsp/hifi4/include" project_relative_path="algo/ndsp/hifi4/include" type="c_include">
+        <files mask="NatureDSP_Signal_math.h"/>
+        <files mask="NatureDSP_Signal_matop.h"/>
+        <files mask="NatureDSP_types.h"/>
+        <files mask="common.h"/>
+        <files mask="common_fpu.h"/>
+        <files mask="expf_tbl.h"/>
+        <files mask="inff_tbl.h"/>
+        <files mask="inv2pif_tbl.h"/>
+        <files mask="lognf_tbl.h"/>
+        <files mask="nan_tbl.h"/>
+        <files mask="nanf_tbl.h"/>
+        <files mask="pow2f_tbl.h"/>
+        <files mask="sinf_tbl.h"/>
+        <files mask="sqrt2f_tbl.h"/>
+        <files mask="tanhf_tbl.h"/>
+      </source>
+      <source relative_path="../../../algo/ndsp/hifi4/src" project_relative_path="algo/ndsp/hifi4/src" type="src">
+        <files mask="expf_tbl.c"/>
+        <files mask="inff_tbl.c"/>
+        <files mask="inv2pif_tbl.c"/>
+        <files mask="lognf_tbl.c"/>
+        <files mask="nanf_tbl.c"/>
+        <files mask="pow2f_tbl.c"/>
+        <files mask="scl_sigmoidf_hifi4.c"/>
+        <files mask="scl_tanhf_hifi4.c"/>
+        <files mask="sinf_tbl.c"/>
+        <files mask="sqrt2f_tbl.c"/>
+        <files mask="tanhf_tbl.c"/>
+        <files mask="vec_alognf_hifi4.c"/>
+        <files mask="vec_cosinef_hifi4.c"/>
+        <files mask="vec_lognf_hifi4.c"/>
+        <files mask="vec_relu32x32_hifi4.c"/>
+        <files mask="vec_reluf_hifi4.c"/>
+        <files mask="vec_sigmoid32x32_hifi4.c"/>
+        <files mask="vec_sigmoidf_hifi4.c"/>
+        <files mask="vec_sinef_hifi4.c"/>
+        <files mask="vec_softmax32x32_hifi4.c"/>
+        <files mask="vec_softmaxf_hifi4.c"/>
+        <files mask="vec_tanh32x32_hifi4.c"/>
+        <files mask="vec_tanhf_hifi4.c"/>
+      </source>
+      <source relative_path="../../../include" project_relative_path="include" type="c_include">
+        <files mask="xa_type_def.h"/>
+      </source>
+      <source relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include">
+        <files mask="xa_nnlib_api.h"/>
+        <files mask="xa_nnlib_cnn_api.h"/>
+        <files mask="xa_nnlib_gru_api.h"/>
+        <files mask="xa_nnlib_kernels_api.h"/>
+        <files mask="xa_nnlib_lstm_api.h"/>
+        <files mask="xa_nnlib_standards.h"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="README"/>
+        <files mask="license.txt"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+        <include_path relative_path="../../../algo/common/include" project_relative_path="algo/common/include" type="c_include"/>
+        <include_path relative_path="../../../algo/kernels/basic/hifi4" project_relative_path="algo/kernels/basic/hifi4" type="c_include"/>
+        <include_path relative_path="../../../algo/kernels/cnn/hifi4" project_relative_path="algo/kernels/cnn/hifi4" type="c_include"/>
+        <include_path relative_path="../../../algo/kernels/pool/hifi4" project_relative_path="algo/kernels/pool/hifi4" type="c_include"/>
+        <include_path relative_path="../../../algo/ndsp/hifi4/include" project_relative_path="algo/ndsp/hifi4/include" type="c_include"/>
+        <include_path relative_path="../../../include" project_relative_path="include" type="c_include"/>
+        <include_path relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1189" name="CMSIS-NN" brief="CMSIS-NN library" version="23.08" full_name="CMSIS-NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis_nn" project_base_path="eiq/tensorflow-lite/third_party/cmsis_nn">
+      <dependencies>
+        <all>
+          <component_dependency value="CMSIS_Include_core_cm.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="../../../Include" project_relative_path="Include" type="c_include">
+        <files mask="arm_nn_math_types.h"/>
+        <files mask="arm_nn_tables.h"/>
+        <files mask="arm_nn_types.h"/>
+        <files mask="arm_nnfunctions.h"/>
+        <files mask="arm_nnsupportfunctions.h"/>
+      </source>
+      <source relative_path="../../../Include/Internal" project_relative_path="Include/Internal" type="c_include">
+        <files mask="arm_nn_compiler.h"/>
+      </source>
+      <source relative_path="../../../Source/ActivationFunctions" project_relative_path="Source/ActivationFunctions" type="src">
+        <files mask="arm_nn_activation_s16.c"/>
+        <files mask="arm_relu6_s8.c"/>
+        <files mask="arm_relu_q15.c"/>
+        <files mask="arm_relu_q7.c"/>
+      </source>
+      <source relative_path="../../../Source/BasicMathFunctions" project_relative_path="Source/BasicMathFunctions" type="src">
+        <files mask="arm_elementwise_add_s16.c"/>
+        <files mask="arm_elementwise_add_s8.c"/>
+        <files mask="arm_elementwise_mul_s16.c"/>
+        <files mask="arm_elementwise_mul_s16_s8.c"/>
+        <files mask="arm_elementwise_mul_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/ConcatenationFunctions" project_relative_path="Source/ConcatenationFunctions" type="src">
+        <files mask="arm_concatenation_s8_w.c"/>
+        <files mask="arm_concatenation_s8_x.c"/>
+        <files mask="arm_concatenation_s8_y.c"/>
+        <files mask="arm_concatenation_s8_z.c"/>
+      </source>
+      <source relative_path="../../../Source/ConvolutionFunctions" project_relative_path="Source/ConvolutionFunctions" type="src">
+        <files mask="arm_convolve_1_x_n_s8.c"/>
+        <files mask="arm_convolve_1x1_s8.c"/>
+        <files mask="arm_convolve_1x1_s8_fast.c"/>
+        <files mask="arm_convolve_fast_s16.c"/>
+        <files mask="arm_convolve_get_buffer_sizes_s16.c"/>
+        <files mask="arm_convolve_get_buffer_sizes_s8.c"/>
+        <files mask="arm_convolve_s16.c"/>
+        <files mask="arm_convolve_s8.c"/>
+        <files mask="arm_convolve_wrapper_s16.c"/>
+        <files mask="arm_convolve_wrapper_s8.c"/>
+        <files mask="arm_depthwise_conv_3x3_s8.c"/>
+        <files mask="arm_depthwise_conv_fast_s16.c"/>
+        <files mask="arm_depthwise_conv_get_buffer_sizes_s16.c"/>
+        <files mask="arm_depthwise_conv_get_buffer_sizes_s8.c"/>
+        <files mask="arm_depthwise_conv_s16.c"/>
+        <files mask="arm_depthwise_conv_s8.c"/>
+        <files mask="arm_depthwise_conv_s8_opt.c"/>
+        <files mask="arm_depthwise_conv_wrapper_s16.c"/>
+        <files mask="arm_depthwise_conv_wrapper_s8.c"/>
+        <files mask="arm_nn_depthwise_conv_s8_core.c"/>
+        <files mask="arm_nn_mat_mult_kernel_s8_s16.c"/>
+        <files mask="arm_nn_mat_mult_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/FullyConnectedFunctions" project_relative_path="Source/FullyConnectedFunctions" type="src">
+        <files mask="arm_fully_connected_get_buffer_sizes_s16.c"/>
+        <files mask="arm_fully_connected_get_buffer_sizes_s8.c"/>
+        <files mask="arm_fully_connected_s16.c"/>
+        <files mask="arm_fully_connected_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/LSTMFunctions" project_relative_path="Source/LSTMFunctions" type="src">
+        <files mask="arm_lstm_unidirectional_s8_s16.c"/>
+      </source>
+      <source relative_path="../../../Source/NNSupportFunctions" project_relative_path="Source/NNSupportFunctions" type="src">
+        <files mask="arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
+        <files mask="arm_nn_depthwise_conv_nt_t_s16.c"/>
+        <files mask="arm_nn_depthwise_conv_nt_t_s8.c"/>
+        <files mask="arm_nn_lstm_calculate_gate_s8_s16.c"/>
+        <files mask="arm_nn_lstm_step_s8_s16.c"/>
+        <files mask="arm_nn_lstm_update_cell_state_s16.c"/>
+        <files mask="arm_nn_lstm_update_output_s8_s16.c"/>
+        <files mask="arm_nn_mat_mul_core_1x_s8.c"/>
+        <files mask="arm_nn_mat_mul_core_4x_s8.c"/>
+        <files mask="arm_nn_mat_mul_kernel_s16.c"/>
+        <files mask="arm_nn_mat_mult_nt_t_s8.c"/>
+        <files mask="arm_nn_vec_mat_mul_result_acc_s8.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_s16.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_s8.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_svdf_s8.c"/>
+        <files mask="arm_nntables.c"/>
+        <files mask="arm_q7_to_q15_with_offset.c"/>
+        <files mask="arm_s8_to_s16_unordered_with_offset.c"/>
+      </source>
+      <source relative_path="../../../Source/PoolingFunctions" project_relative_path="Source/PoolingFunctions" type="src">
+        <files mask="arm_avgpool_get_buffer_sizes_s16.c"/>
+        <files mask="arm_avgpool_get_buffer_sizes_s8.c"/>
+        <files mask="arm_avgpool_s16.c"/>
+        <files mask="arm_avgpool_s8.c"/>
+        <files mask="arm_max_pool_s16.c"/>
+        <files mask="arm_max_pool_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/ReshapeFunctions" project_relative_path="Source/ReshapeFunctions" type="src">
+        <files mask="arm_reshape_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/SVDFunctions" project_relative_path="Source/SVDFunctions" type="src">
+        <files mask="arm_svdf_s8.c"/>
+        <files mask="arm_svdf_state_s16_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/SoftmaxFunctions" project_relative_path="Source/SoftmaxFunctions" type="src">
+        <files mask="arm_nn_softmax_common_s8.c"/>
+        <files mask="arm_softmax_s16.c"/>
+        <files mask="arm_softmax_s8.c"/>
+        <files mask="arm_softmax_s8_s16.c"/>
+        <files mask="arm_softmax_u8.c"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="LICENSE.txt"/>
+        <files mask="README.md"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+        <include_path relative_path="../../../Include" project_relative_path="Include" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT1189" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with reference kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="activations.cpp"/>
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="floor.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="leaky_relu.cpp"/>
+        <files mask="logistic.cpp"/>
+        <files mask="lstm_eval.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pad.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="quantize.cpp"/>
+        <files mask="reduce.cpp"/>
+        <files mask="reshape.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="strided_slice.cpp"/>
+        <files mask="sub.cpp"/>
+        <files mask="transpose_conv.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_reference.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1189" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <defines>
+        <define name="CMSIS_NN" value=""/>
+      </defines>
+      <dependencies>
+        <all>
+          <any_of>
+            <device_core_dependency value="cm33_MIMXRT1189xxxxx"/>
+            <device_core_dependency value="cm7_MIMXRT1189xxxxx"/>
+          </any_of>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1189"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="activations.cpp"/>
+        <files mask="ethosu.cpp"/>
+        <files mask="floor.cpp"/>
+        <files mask="leaky_relu.cpp"/>
+        <files mask="logistic.cpp"/>
+        <files mask="lstm_eval.cpp"/>
+        <files mask="pad.cpp"/>
+        <files mask="quantize.cpp"/>
+        <files mask="reduce.cpp"/>
+        <files mask="reshape.cpp"/>
+        <files mask="strided_slice.cpp"/>
+        <files mask="sub.cpp"/>
+        <files mask="transpose_conv.cpp"/>
+      </source>
+      <source exclude="true" relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.binary.MIMXRT1189" name="TensorFlow Lite Micro with core specific kernels" brief="TensorFlow Lite Micro library binary with core specific kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library binary with core specific kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm7/armgcc" project_relative_path="lib" type="lib" device_cores="cm7_MIMXRT1189xxxxx">
+        <files mask="libtflm.a"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm7/armgcc" project_relative_path="lib" type="doc" device_cores="cm7_MIMXRT1189xxxxx">
+        <files mask="build.sh"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm33/armgcc" project_relative_path="lib" type="lib" device_cores="cm33_MIMXRT1189xxxxx">
+        <files mask="libtflm.a"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm33/armgcc" project_relative_path="lib" type="doc" device_cores="cm33_MIMXRT1189xxxxx">
+        <files mask="build.sh"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
+        <files mask="debug_log.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_binary.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+        <include_path relative_path="../third_party/flatbuffers/include" project_relative_path="third_party/flatbuffers/include" type="c_include"/>
+        <include_path relative_path="../third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.ethosu.MIMXRT1189" name="TensorFlow Lite Micro with CMSIS-NN and Ethos-U kernels" brief="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <defines>
+        <define name="CMSIS_NN" value=""/>
+      </defines>
+      <dependencies>
+        <all>
+          <any_of>
+            <device_core_dependency value="cm33_MIMXRT1189xxxxx"/>
+            <device_core_dependency value="cm7_MIMXRT1189xxxxx"/>
+          </any_of>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1189"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
+        <files mask="debug_log.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="activations.cpp"/>
+        <files mask="floor.cpp"/>
+        <files mask="leaky_relu.cpp"/>
+        <files mask="logistic.cpp"/>
+        <files mask="lstm_eval.cpp"/>
+        <files mask="pad.cpp"/>
+        <files mask="quantize.cpp"/>
+        <files mask="reduce.cpp"/>
+        <files mask="reshape.cpp"/>
+        <files mask="strided_slice.cpp"/>
+        <files mask="sub.cpp"/>
+        <files mask="transpose_conv.cpp"/>
+      </source>
+      <source exclude="true" relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels/ethos_u" project_relative_path="tensorflow/lite/micro/kernels/ethos_u" type="src">
+        <files mask="ethosu.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1189" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library header files" version="23.09.18" full_name="TensorFlow Lite Micro library header files" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1189"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1189"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="AUTHORS"/>
+        <files mask="LICENSE"/>
+        <files mask="NOTICE"/>
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="readme.txt"/>
+      </source>
+      <source relative_path="../signal/micro/kernels" project_relative_path="signal/micro/kernels" type="c_include">
+        <files mask="delay_flexbuffers_generated_data.h"/>
+        <files mask="energy_flexbuffers_generated_data.h"/>
+        <files mask="fft_flexbuffers_generated_data.h"/>
+        <files mask="filter_bank_flexbuffers_generated_data.h"/>
+        <files mask="filter_bank_log_flexbuffers_generated_data.h"/>
+        <files mask="filter_bank_spectral_subtraction_flexbuffers_generated_data.h"/>
+        <files mask="framer_flexbuffers_generated_data.h"/>
+        <files mask="irfft.h"/>
+        <files mask="overlap_add_flexbuffers_generated_data.h"/>
+        <files mask="pcan_flexbuffers_generated_data.h"/>
+        <files mask="rfft.h"/>
+        <files mask="stacker_flexbuffers_generated_data.h"/>
+        <files mask="window_flexbuffers_generated_data.h"/>
+      </source>
+      <source relative_path="../signal/src" project_relative_path="signal/src" type="c_include">
+        <files mask="circular_buffer.h"/>
+        <files mask="complex.h"/>
+        <files mask="energy.h"/>
+        <files mask="fft_auto_scale.h"/>
+        <files mask="filter_bank.h"/>
+        <files mask="filter_bank_log.h"/>
+        <files mask="filter_bank_spectral_subtraction.h"/>
+        <files mask="filter_bank_square_root.h"/>
+        <files mask="irfft.h"/>
+        <files mask="log.h"/>
+        <files mask="max_abs.h"/>
+        <files mask="msb.h"/>
+        <files mask="overlap_add.h"/>
+        <files mask="pcan_argc_fixed.h"/>
+        <files mask="rfft.h"/>
+        <files mask="square_root.h"/>
+        <files mask="window.h"/>
+      </source>
+      <source relative_path="../signal/src/kiss_fft_wrappers" project_relative_path="signal/src/kiss_fft_wrappers" type="c_include">
+        <files mask="kiss_fft_common.h"/>
+        <files mask="kiss_fft_float.h"/>
+        <files mask="kiss_fft_int16.h"/>
+        <files mask="kiss_fft_int32.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite" project_relative_path="tensorflow/lite" type="c_include">
+        <files mask="builtin_op_data.h"/>
+        <files mask="builtin_ops.h"/>
+        <files mask="context_util.h"/>
+        <files mask="portable_type_to_tflitetype.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/c" project_relative_path="tensorflow/lite/c" type="c_include">
+        <files mask="builtin_op_data.h"/>
+        <files mask="c_api_types.h"/>
+        <files mask="common.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/core" project_relative_path="tensorflow/lite/core" type="c_include">
+        <files mask="macros.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/core/api" project_relative_path="tensorflow/lite/core/api" type="c_include">
+        <files mask="error_reporter.h"/>
+        <files mask="flatbuffer_conversions.h"/>
+        <files mask="tensor_utils.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/core/c" project_relative_path="tensorflow/lite/core/c" type="c_include">
+        <files mask="builtin_op_data.h"/>
+        <files mask="c_api_types.h"/>
+        <files mask="common.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels" project_relative_path="tensorflow/lite/kernels" type="c_include">
+        <files mask="kernel_util.h"/>
+        <files mask="op_macros.h"/>
+        <files mask="padding.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal" project_relative_path="tensorflow/lite/kernels/internal" type="c_include">
+        <files mask="common.h"/>
+        <files mask="compatibility.h"/>
+        <files mask="cppmath.h"/>
+        <files mask="max.h"/>
+        <files mask="min.h"/>
+        <files mask="portable_tensor.h"/>
+        <files mask="portable_tensor_utils.h"/>
+        <files mask="quantization_util.h"/>
+        <files mask="runtime_shape.h"/>
+        <files mask="strided_slice_logic.h"/>
+        <files mask="tensor_ctypes.h"/>
+        <files mask="types.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal/optimized" project_relative_path="tensorflow/lite/kernels/internal/optimized" type="c_include">
+        <files mask="neon_check.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal/reference" project_relative_path="tensorflow/lite/kernels/internal/reference" type="c_include">
+        <files mask="add.h"/>
+        <files mask="add_n.h"/>
+        <files mask="arg_min_max.h"/>
+        <files mask="batch_matmul.h"/>
+        <files mask="batch_to_space_nd.h"/>
+        <files mask="binary_function.h"/>
+        <files mask="broadcast_args.h"/>
+        <files mask="broadcast_to.h"/>
+        <files mask="ceil.h"/>
+        <files mask="comparisons.h"/>
+        <files mask="concatenation.h"/>
+        <files mask="conv.h"/>
+        <files mask="cumsum.h"/>
+        <files mask="depth_to_space.h"/>
+        <files mask="depthwiseconv_float.h"/>
+        <files mask="depthwiseconv_uint8.h"/>
+        <files mask="dequantize.h"/>
+        <files mask="div.h"/>
+        <files mask="elu.h"/>
+        <files mask="exp.h"/>
+        <files mask="fill.h"/>
+        <files mask="floor.h"/>
+        <files mask="floor_div.h"/>
+        <files mask="floor_mod.h"/>
+        <files mask="fully_connected.h"/>
+        <files mask="hard_swish.h"/>
+        <files mask="l2normalization.h"/>
+        <files mask="leaky_relu.h"/>
+        <files mask="log_softmax.h"/>
+        <files mask="logistic.h"/>
+        <files mask="lstm_cell.h"/>
+        <files mask="maximum_minimum.h"/>
+        <files mask="mul.h"/>
+        <files mask="neg.h"/>
+        <files mask="pad.h"/>
+        <files mask="pooling.h"/>
+        <files mask="portable_tensor_utils.h"/>
+        <files mask="portable_tensor_utils_impl.h"/>
+        <files mask="prelu.h"/>
+        <files mask="process_broadcast_shapes.h"/>
+        <files mask="quantize.h"/>
+        <files mask="reduce.h"/>
+        <files mask="requantize.h"/>
+        <files mask="resize_bilinear.h"/>
+        <files mask="resize_nearest_neighbor.h"/>
+        <files mask="round.h"/>
+        <files mask="select.h"/>
+        <files mask="slice.h"/>
+        <files mask="softmax.h"/>
+        <files mask="space_to_batch_nd.h"/>
+        <files mask="space_to_depth.h"/>
+        <files mask="strided_slice.h"/>
+        <files mask="sub.h"/>
+        <files mask="tanh.h"/>
+        <files mask="transpose.h"/>
+        <files mask="transpose_conv.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal/reference/integer_ops" project_relative_path="tensorflow/lite/kernels/internal/reference/integer_ops" type="c_include">
+        <files mask="add.h"/>
+        <files mask="conv.h"/>
+        <files mask="depthwise_conv.h"/>
+        <files mask="fully_connected.h"/>
+        <files mask="l2normalization.h"/>
+        <files mask="logistic.h"/>
+        <files mask="mean.h"/>
+        <files mask="mul.h"/>
+        <files mask="pooling.h"/>
+        <files mask="tanh.h"/>
+        <files mask="transpose_conv.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="c_include">
+        <files mask="compatibility.h"/>
+        <files mask="debug_log.h"/>
+        <files mask="fake_micro_context.h"/>
+        <files mask="flatbuffer_utils.h"/>
+        <files mask="memory_helpers.h"/>
+        <files mask="micro_allocation_info.h"/>
+        <files mask="micro_allocator.h"/>
+        <files mask="micro_arena_constants.h"/>
+        <files mask="micro_common.h"/>
+        <files mask="micro_context.h"/>
+        <files mask="micro_graph.h"/>
+        <files mask="micro_interpreter.h"/>
+        <files mask="micro_interpreter_context.h"/>
+        <files mask="micro_interpreter_graph.h"/>
+        <files mask="micro_log.h"/>
+        <files mask="micro_mutable_op_resolver.h"/>
+        <files mask="micro_op_resolver.h"/>
+        <files mask="micro_profiler.h"/>
+        <files mask="micro_profiler_interface.h"/>
+        <files mask="micro_resource_variable.h"/>
+        <files mask="micro_time.h"/>
+        <files mask="micro_utils.h"/>
+        <files mask="mock_micro_graph.h"/>
+        <files mask="recording_micro_allocator.h"/>
+        <files mask="recording_micro_interpreter.h"/>
+        <files mask="system_setup.h"/>
+        <files mask="test_helper_custom_ops.h"/>
+        <files mask="test_helpers.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="c_include">
+        <files mask="activation_utils.h"/>
+        <files mask="activations.h"/>
+        <files mask="add.h"/>
+        <files mask="circular_buffer.h"/>
+        <files mask="circular_buffer_flexbuffers_generated_data.h"/>
+        <files mask="conv.h"/>
+        <files mask="conv_test.h"/>
+        <files mask="depthwise_conv.h"/>
+        <files mask="dequantize.h"/>
+        <files mask="detection_postprocess_flexbuffers_generated_data.h"/>
+        <files mask="ethosu.h"/>
+        <files mask="fully_connected.h"/>
+        <files mask="hard_swish.h"/>
+        <files mask="kernel_runner.h"/>
+        <files mask="kernel_util.h"/>
+        <files mask="leaky_relu.h"/>
+        <files mask="logical.h"/>
+        <files mask="logistic.h"/>
+        <files mask="lstm_eval.h"/>
+        <files mask="lstm_eval_test.h"/>
+        <files mask="lstm_shared.h"/>
+        <files mask="micro_ops.h"/>
+        <files mask="micro_tensor_utils.h"/>
+        <files mask="mul.h"/>
+        <files mask="pad.h"/>
+        <files mask="pooling.h"/>
+        <files mask="prelu.h"/>
+        <files mask="quantize.h"/>
+        <files mask="reduce.h"/>
+        <files mask="reshape.h"/>
+        <files mask="softmax.h"/>
+        <files mask="strided_slice.h"/>
+        <files mask="sub.h"/>
+        <files mask="svdf.h"/>
+        <files mask="unidirectional_sequence_lstm.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/arena_allocator" project_relative_path="tensorflow/lite/micro/arena_allocator" type="c_include">
+        <files mask="ibuffer_allocator.h"/>
+        <files mask="non_persistent_arena_buffer_allocator.h"/>
+        <files mask="persistent_arena_buffer_allocator.h"/>
+        <files mask="recording_single_arena_buffer_allocator.h"/>
+        <files mask="single_arena_buffer_allocator.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/memory_planner" project_relative_path="tensorflow/lite/micro/memory_planner" type="c_include">
+        <files mask="greedy_memory_planner.h"/>
+        <files mask="linear_memory_planner.h"/>
+        <files mask="memory_plan_struct.h"/>
+        <files mask="micro_memory_planner.h"/>
+        <files mask="non_persistent_buffer_planner_shim.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/tflite_bridge" project_relative_path="tensorflow/lite/micro/tflite_bridge" type="c_include">
+        <files mask="flatbuffer_conversions_bridge.h"/>
+        <files mask="micro_error_reporter.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/schema" project_relative_path="tensorflow/lite/schema" type="c_include">
+        <files mask="schema_generated.h"/>
+        <files mask="schema_utils.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_headers.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT1189" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="23.09.18" full_name="TensorFlow Lite Micro library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1189"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="AUTHORS"/>
+        <files mask="LICENSE"/>
+        <files mask="NOTICE"/>
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="readme.txt"/>
+      </source>
+      <source relative_path="../signal/micro/kernels" project_relative_path="signal/micro/kernels" type="src">
+        <files mask="delay.cpp"/>
+        <files mask="energy.cpp"/>
+        <files mask="fft_auto_scale.cpp"/>
+        <files mask="filter_bank.cpp"/>
+        <files mask="filter_bank_log.cpp"/>
+        <files mask="filter_bank_spectral_subtraction.cpp"/>
+        <files mask="filter_bank_square_root.cpp"/>
+        <files mask="framer.cpp"/>
+        <files mask="irfft.cpp"/>
+        <files mask="overlap_add.cpp"/>
+        <files mask="pcan.cpp"/>
+        <files mask="rfft.cpp"/>
+        <files mask="stacker.cpp"/>
+        <files mask="window.cpp"/>
+      </source>
+      <source relative_path="../signal/src" project_relative_path="signal/src" type="src">
+        <files mask="circular_buffer.cpp"/>
+        <files mask="energy.cpp"/>
+        <files mask="fft_auto_scale.cpp"/>
+        <files mask="filter_bank.cpp"/>
+        <files mask="filter_bank_log.cpp"/>
+        <files mask="filter_bank_spectral_subtraction.cpp"/>
+        <files mask="filter_bank_square_root.cpp"/>
+        <files mask="irfft_float.cpp"/>
+        <files mask="irfft_int16.cpp"/>
+        <files mask="irfft_int32.cpp"/>
+        <files mask="log.cpp"/>
+        <files mask="max_abs.cpp"/>
+        <files mask="msb_32.cpp"/>
+        <files mask="msb_64.cpp"/>
+        <files mask="overlap_add.cpp"/>
+        <files mask="pcan_argc_fixed.cpp"/>
+        <files mask="rfft_float.cpp"/>
+        <files mask="rfft_int16.cpp"/>
+        <files mask="rfft_int32.cpp"/>
+        <files mask="square_root_32.cpp"/>
+        <files mask="square_root_64.cpp"/>
+        <files mask="window.cpp"/>
+      </source>
+      <source relative_path="../signal/src/kiss_fft_wrappers" project_relative_path="signal/src/kiss_fft_wrappers" type="src">
+        <files mask="kiss_fft_float.cpp"/>
+        <files mask="kiss_fft_int16.cpp"/>
+        <files mask="kiss_fft_int32.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/core/api" project_relative_path="tensorflow/lite/core/api" type="src">
+        <files mask="error_reporter.cpp"/>
+        <files mask="flatbuffer_conversions.cpp"/>
+        <files mask="tensor_utils.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/core/c" project_relative_path="tensorflow/lite/core/c" type="src">
+        <files mask="common.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels" project_relative_path="tensorflow/lite/kernels" type="src">
+        <files mask="kernel_util.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal" project_relative_path="tensorflow/lite/kernels/internal" type="src">
+        <files mask="common.cpp"/>
+        <files mask="portable_tensor_utils.cpp"/>
+        <files mask="quantization_util.cpp"/>
+        <files mask="tensor_ctypes.cpp"/>
+        <files mask="tensor_utils.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/kernels/internal/reference" project_relative_path="tensorflow/lite/kernels/internal/reference" type="src">
+        <files mask="comparisons.cpp"/>
+        <files mask="portable_tensor_utils.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
+        <files mask="fake_micro_context.cpp"/>
+        <files mask="flatbuffer_utils.cpp"/>
+        <files mask="memory_helpers.cpp"/>
+        <files mask="micro_allocation_info.cpp"/>
+        <files mask="micro_allocator.cpp"/>
+        <files mask="micro_context.cpp"/>
+        <files mask="micro_interpreter.cpp"/>
+        <files mask="micro_interpreter_context.cpp"/>
+        <files mask="micro_interpreter_graph.cpp"/>
+        <files mask="micro_log.cpp"/>
+        <files mask="micro_op_resolver.cpp"/>
+        <files mask="micro_profiler.cpp"/>
+        <files mask="micro_resource_variable.cpp"/>
+        <files mask="micro_time.cpp"/>
+        <files mask="micro_utils.cpp"/>
+        <files mask="mock_micro_graph.cpp"/>
+        <files mask="recording_micro_allocator.cpp"/>
+        <files mask="system_setup.cpp"/>
+        <files mask="test_helper_custom_ops.cpp"/>
+        <files mask="test_helpers.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="activations_common.cpp"/>
+        <files mask="add_common.cpp"/>
+        <files mask="add_n.cpp"/>
+        <files mask="arg_min_max.cpp"/>
+        <files mask="assign_variable.cpp"/>
+        <files mask="batch_matmul.cpp"/>
+        <files mask="batch_to_space_nd.cpp"/>
+        <files mask="broadcast_args.cpp"/>
+        <files mask="broadcast_to.cpp"/>
+        <files mask="call_once.cpp"/>
+        <files mask="cast.cpp"/>
+        <files mask="ceil.cpp"/>
+        <files mask="circular_buffer.cpp"/>
+        <files mask="circular_buffer_common.cpp"/>
+        <files mask="comparisons.cpp"/>
+        <files mask="concatenation.cpp"/>
+        <files mask="conv_common.cpp"/>
+        <files mask="cumsum.cpp"/>
+        <files mask="depth_to_space.cpp"/>
+        <files mask="depthwise_conv_common.cpp"/>
+        <files mask="dequantize.cpp"/>
+        <files mask="dequantize_common.cpp"/>
+        <files mask="detection_postprocess.cpp"/>
+        <files mask="div.cpp"/>
+        <files mask="elementwise.cpp"/>
+        <files mask="elu.cpp"/>
+        <files mask="embedding_lookup.cpp"/>
+        <files mask="exp.cpp"/>
+        <files mask="expand_dims.cpp"/>
+        <files mask="fill.cpp"/>
+        <files mask="floor_div.cpp"/>
+        <files mask="floor_mod.cpp"/>
+        <files mask="fully_connected_common.cpp"/>
+        <files mask="gather.cpp"/>
+        <files mask="gather_nd.cpp"/>
+        <files mask="hard_swish.cpp"/>
+        <files mask="hard_swish_common.cpp"/>
+        <files mask="if.cpp"/>
+        <files mask="kernel_util.cpp"/>
+        <files mask="l2_pool_2d.cpp"/>
+        <files mask="l2norm.cpp"/>
+        <files mask="leaky_relu_common.cpp"/>
+        <files mask="log_softmax.cpp"/>
+        <files mask="logical.cpp"/>
+        <files mask="logical_common.cpp"/>
+        <files mask="logistic_common.cpp"/>
+        <files mask="lstm_eval_common.cpp"/>
+        <files mask="maximum_minimum.cpp"/>
+        <files mask="micro_tensor_utils.cpp"/>
+        <files mask="mirror_pad.cpp"/>
+        <files mask="mul_common.cpp"/>
+        <files mask="neg.cpp"/>
+        <files mask="pack.cpp"/>
+        <files mask="pooling_common.cpp"/>
+        <files mask="prelu.cpp"/>
+        <files mask="prelu_common.cpp"/>
+        <files mask="quantize_common.cpp"/>
+        <files mask="read_variable.cpp"/>
+        <files mask="reduce_common.cpp"/>
+        <files mask="reshape_common.cpp"/>
+        <files mask="resize_bilinear.cpp"/>
+        <files mask="resize_nearest_neighbor.cpp"/>
+        <files mask="round.cpp"/>
+        <files mask="select.cpp"/>
+        <files mask="shape.cpp"/>
+        <files mask="slice.cpp"/>
+        <files mask="strided_slice_common.cpp"/>
+        <files mask="softmax_common.cpp"/>
+        <files mask="space_to_batch_nd.cpp"/>
+        <files mask="space_to_depth.cpp"/>
+        <files mask="split.cpp"/>
+        <files mask="split_v.cpp"/>
+        <files mask="squared_difference.cpp"/>
+        <files mask="squeeze.cpp"/>
+        <files mask="sub_common.cpp"/>
+        <files mask="svdf_common.cpp"/>
+        <files mask="tanh.cpp"/>
+        <files mask="transpose.cpp"/>
+        <files mask="unpack.cpp"/>
+        <files mask="var_handle.cpp"/>
+        <files mask="while.cpp"/>
+        <files mask="zeros_like.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/arena_allocator" project_relative_path="tensorflow/lite/micro/arena_allocator" type="c_include">
+        <files mask="ibuffer_allocator.h"/>
+        <files mask="non_persistent_arena_buffer_allocator.h"/>
+        <files mask="persistent_arena_buffer_allocator.h"/>
+        <files mask="recording_single_arena_buffer_allocator.h"/>
+        <files mask="single_arena_buffer_allocator.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/arena_allocator" project_relative_path="tensorflow/lite/micro/arena_allocator" type="src">
+        <files mask="non_persistent_arena_buffer_allocator.cpp"/>
+        <files mask="persistent_arena_buffer_allocator.cpp"/>
+        <files mask="recording_single_arena_buffer_allocator.cpp"/>
+        <files mask="single_arena_buffer_allocator.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/memory_planner" project_relative_path="tensorflow/lite/micro/memory_planner" type="src">
+        <files mask="greedy_memory_planner.cpp"/>
+        <files mask="linear_memory_planner.cpp"/>
+        <files mask="non_persistent_buffer_planner_shim.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/tflite_bridge" project_relative_path="tensorflow/lite/micro/tflite_bridge" type="src">
+        <files mask="flatbuffer_conversions_bridge.cpp"/>
+        <files mask="micro_error_reporter.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/schema" project_relative_path="tensorflow/lite/schema" type="src">
+        <files mask="schema_utils.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+        <include_path relative_path="../third_party/kissfft" project_relative_path="third_party/kissfft" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT1189" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="23.09.18" full_name="TensorFlow Lite Micro word detection library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1189"/>
+          <device_dependency value="MIMXRT1189xxxxx"/>
+        </all>
+      </dependencies>
+      <source relative_path="../tensorflow/lite/micro/examples/micro_speech" project_relative_path="tensorflow/lite/micro/examples/micro_speech" type="src">
+        <files mask="audio_provider.cpp"/>
+        <files mask="command_responder.cpp"/>
+        <files mask="feature_provider.cpp"/>
+        <files mask="recognize_commands.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/examples/micro_speech" project_relative_path="tensorflow/lite/micro/examples/micro_speech" type="c_include">
+        <files mask="audio_provider.h"/>
+        <files mask="command_responder.h"/>
+        <files mask="feature_provider.h"/>
+        <files mask="recognize_commands.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/examples/micro_speech/micro_features" project_relative_path="tensorflow/lite/micro/examples/micro_speech/micro_features" type="src">
+        <files mask="micro_features_generator.cpp"/>
+        <files mask="micro_model_settings.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/examples/micro_speech/micro_features" project_relative_path="tensorflow/lite/micro/examples/micro_speech/micro_features" type="c_include">
+        <files mask="micro_features_generator.h"/>
+        <files mask="micro_model_settings.h"/>
+        <files mask="model.h"/>
+      </source>
+      <source relative_path="../tensorflow/lite/experimental/microfrontend/lib" project_relative_path="tensorflow/lite/experimental/microfrontend/lib" type="src">
+        <files mask="filterbank.c"/>
+        <files mask="filterbank_util.c"/>
+        <files mask="frontend.c"/>
+        <files mask="frontend_util.c"/>
+        <files mask="log_lut.c"/>
+        <files mask="log_scale.c"/>
+        <files mask="log_scale_util.c"/>
+        <files mask="noise_reduction.c"/>
+        <files mask="noise_reduction_util.c"/>
+        <files mask="pcan_gain_control.c"/>
+        <files mask="pcan_gain_control_util.c"/>
+        <files mask="window.c"/>
+        <files mask="window_util.c"/>
+        <files mask="fft.cpp"/>
+        <files mask="fft_util.cpp"/>
+        <files mask="kiss_fft_int16.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/experimental/microfrontend/lib" project_relative_path="tensorflow/lite/experimental/microfrontend/lib" type="c_include">
+        <files mask="bits.h"/>
+        <files mask="fft.h"/>
+        <files mask="fft_util.h"/>
+        <files mask="filterbank.h"/>
+        <files mask="filterbank_util.h"/>
+        <files mask="frontend.h"/>
+        <files mask="frontend_util.h"/>
+        <files mask="kiss_fft_common.h"/>
+        <files mask="kiss_fft_int16.h"/>
+        <files mask="log_lut.h"/>
+        <files mask="log_scale.h"/>
+        <files mask="log_scale_util.h"/>
+        <files mask="noise_reduction.h"/>
+        <files mask="noise_reduction_util.h"/>
+        <files mask="pcan_gain_control.h"/>
+        <files mask="pcan_gain_control_util.h"/>
+        <files mask="window.h"/>
+        <files mask="window_util.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_examples_microspeech.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+  </components>
+</ksdk:manifest>

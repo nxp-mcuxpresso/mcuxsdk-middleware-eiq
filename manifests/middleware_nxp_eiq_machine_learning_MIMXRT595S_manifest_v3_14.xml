@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" name="eIQ" brief="eIQ machine learning SDK containing: - ARM CMSIS-NN library (neural network kernels optimized  for Cortex-M cores) - an inference engine for running TensorFlow Lite models - project examples for the Glow NN Compiler" format_version="3.14" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.14.xsd">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" name="eIQ" brief="eIQ machine learning (ML) middleware includes the TensorFlow™ Lite for Microcontrollers (TFLM) inference engine with code examples for inferencing machine learning models. It also provides eIQ Neutron NPU libraries for Neutron-enabled devices." format_version="3.14" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.14.xsd">
 
   <externalDefinitions>
     <definition extID="MIMXRT595S"/>
     <definition extID="armgcc"/>
     <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
+    <definition extID="fusionf1_MIMXRT595S"/>
     <definition extID="cm33_MIMXRT595S"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="fusionf1_MIMXRT595S"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" name="MCUXpressoSDK2150_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" version="2.15.0" revision="2.15.0"/>
+  <ksdk id="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" name="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT595S_manifest_v3_14" version="2.16.000" revision="2.16.000"/>
   <components>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT595S" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
@@ -147,6 +147,129 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT595S" name="CMSIS-NN" brief="CMSIS-NN library" version="23.08" full_name="CMSIS-NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis_nn" project_base_path="eiq/tensorflow-lite/third_party/cmsis_nn">
+      <dependencies>
+        <all>
+          <component_dependency value="CMSIS_Include_core_cm.MIMXRT595S"/>
+          <device_dependency value="MIMXRT595S"/>
+        </all>
+      </dependencies>
+      <source relative_path="../../../Include" project_relative_path="Include" type="c_include">
+        <files mask="arm_nn_math_types.h"/>
+        <files mask="arm_nn_tables.h"/>
+        <files mask="arm_nn_types.h"/>
+        <files mask="arm_nnfunctions.h"/>
+        <files mask="arm_nnsupportfunctions.h"/>
+      </source>
+      <source relative_path="../../../Include/Internal" project_relative_path="Include/Internal" type="c_include">
+        <files mask="arm_nn_compiler.h"/>
+      </source>
+      <source relative_path="../../../Source/ActivationFunctions" project_relative_path="Source/ActivationFunctions" type="src">
+        <files mask="arm_nn_activation_s16.c"/>
+        <files mask="arm_relu6_s8.c"/>
+        <files mask="arm_relu_q15.c"/>
+        <files mask="arm_relu_q7.c"/>
+      </source>
+      <source relative_path="../../../Source/BasicMathFunctions" project_relative_path="Source/BasicMathFunctions" type="src">
+        <files mask="arm_elementwise_add_s16.c"/>
+        <files mask="arm_elementwise_add_s8.c"/>
+        <files mask="arm_elementwise_mul_s16.c"/>
+        <files mask="arm_elementwise_mul_s16_s8.c"/>
+        <files mask="arm_elementwise_mul_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/ConcatenationFunctions" project_relative_path="Source/ConcatenationFunctions" type="src">
+        <files mask="arm_concatenation_s8_w.c"/>
+        <files mask="arm_concatenation_s8_x.c"/>
+        <files mask="arm_concatenation_s8_y.c"/>
+        <files mask="arm_concatenation_s8_z.c"/>
+      </source>
+      <source relative_path="../../../Source/ConvolutionFunctions" project_relative_path="Source/ConvolutionFunctions" type="src">
+        <files mask="arm_convolve_1_x_n_s8.c"/>
+        <files mask="arm_convolve_1x1_s8.c"/>
+        <files mask="arm_convolve_1x1_s8_fast.c"/>
+        <files mask="arm_convolve_fast_s16.c"/>
+        <files mask="arm_convolve_get_buffer_sizes_s16.c"/>
+        <files mask="arm_convolve_get_buffer_sizes_s8.c"/>
+        <files mask="arm_convolve_s16.c"/>
+        <files mask="arm_convolve_s8.c"/>
+        <files mask="arm_convolve_wrapper_s16.c"/>
+        <files mask="arm_convolve_wrapper_s8.c"/>
+        <files mask="arm_depthwise_conv_3x3_s8.c"/>
+        <files mask="arm_depthwise_conv_fast_s16.c"/>
+        <files mask="arm_depthwise_conv_get_buffer_sizes_s16.c"/>
+        <files mask="arm_depthwise_conv_get_buffer_sizes_s8.c"/>
+        <files mask="arm_depthwise_conv_s16.c"/>
+        <files mask="arm_depthwise_conv_s8.c"/>
+        <files mask="arm_depthwise_conv_s8_opt.c"/>
+        <files mask="arm_depthwise_conv_wrapper_s16.c"/>
+        <files mask="arm_depthwise_conv_wrapper_s8.c"/>
+        <files mask="arm_nn_depthwise_conv_s8_core.c"/>
+        <files mask="arm_nn_mat_mult_kernel_s8_s16.c"/>
+        <files mask="arm_nn_mat_mult_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/FullyConnectedFunctions" project_relative_path="Source/FullyConnectedFunctions" type="src">
+        <files mask="arm_fully_connected_get_buffer_sizes_s16.c"/>
+        <files mask="arm_fully_connected_get_buffer_sizes_s8.c"/>
+        <files mask="arm_fully_connected_s16.c"/>
+        <files mask="arm_fully_connected_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/LSTMFunctions" project_relative_path="Source/LSTMFunctions" type="src">
+        <files mask="arm_lstm_unidirectional_s8_s16.c"/>
+      </source>
+      <source relative_path="../../../Source/NNSupportFunctions" project_relative_path="Source/NNSupportFunctions" type="src">
+        <files mask="arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
+        <files mask="arm_nn_depthwise_conv_nt_t_s16.c"/>
+        <files mask="arm_nn_depthwise_conv_nt_t_s8.c"/>
+        <files mask="arm_nn_lstm_calculate_gate_s8_s16.c"/>
+        <files mask="arm_nn_lstm_step_s8_s16.c"/>
+        <files mask="arm_nn_lstm_update_cell_state_s16.c"/>
+        <files mask="arm_nn_lstm_update_output_s8_s16.c"/>
+        <files mask="arm_nn_mat_mul_core_1x_s8.c"/>
+        <files mask="arm_nn_mat_mul_core_4x_s8.c"/>
+        <files mask="arm_nn_mat_mul_kernel_s16.c"/>
+        <files mask="arm_nn_mat_mult_nt_t_s8.c"/>
+        <files mask="arm_nn_vec_mat_mul_result_acc_s8.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_s16.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_s8.c"/>
+        <files mask="arm_nn_vec_mat_mult_t_svdf_s8.c"/>
+        <files mask="arm_nntables.c"/>
+        <files mask="arm_q7_to_q15_with_offset.c"/>
+        <files mask="arm_s8_to_s16_unordered_with_offset.c"/>
+      </source>
+      <source relative_path="../../../Source/PoolingFunctions" project_relative_path="Source/PoolingFunctions" type="src">
+        <files mask="arm_avgpool_get_buffer_sizes_s16.c"/>
+        <files mask="arm_avgpool_get_buffer_sizes_s8.c"/>
+        <files mask="arm_avgpool_s16.c"/>
+        <files mask="arm_avgpool_s8.c"/>
+        <files mask="arm_max_pool_s16.c"/>
+        <files mask="arm_max_pool_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/ReshapeFunctions" project_relative_path="Source/ReshapeFunctions" type="src">
+        <files mask="arm_reshape_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/SVDFunctions" project_relative_path="Source/SVDFunctions" type="src">
+        <files mask="arm_svdf_s8.c"/>
+        <files mask="arm_svdf_state_s16_s8.c"/>
+      </source>
+      <source relative_path="../../../Source/SoftmaxFunctions" project_relative_path="Source/SoftmaxFunctions" type="src">
+        <files mask="arm_nn_softmax_common_s8.c"/>
+        <files mask="arm_softmax_s16.c"/>
+        <files mask="arm_softmax_s8.c"/>
+        <files mask="arm_softmax_s8_s16.c"/>
+        <files mask="arm_softmax_u8.c"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="LICENSE.txt"/>
+        <files mask="README.md"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+        <include_path relative_path="../../../Include" project_relative_path="Include" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.MIMXRT595S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library" version="2.9.0" full_name="Xtensa HiFi4 NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
       <defines>
         <define name="NNLIB_V2" value=""/>
@@ -154,7 +277,10 @@
         <define name="hifi4" value=""/>
       </defines>
       <dependencies>
-        <device_dependency value="MIMXRT595S"/>
+        <all>
+          <device_dependency value="MIMXRT595S"/>
+          <device_core_dependency value="fusionf1_MIMXRT595S"/>
+        </all>
       </dependencies>
       <source relative_path="../../../algo/common/include" project_relative_path="algo/common/include" type="c_include">
         <files mask="xa_api_defs.h"/>
@@ -407,130 +533,7 @@
         <include_path relative_path="../../../include/nnlib" project_relative_path="include/nnlib" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT595S" name="CMSIS-NN" brief="CMSIS-NN library" version="23.08" full_name="CMSIS-NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis_nn" project_base_path="eiq/tensorflow-lite/third_party/cmsis_nn">
-      <dependencies>
-        <all>
-          <component_dependency value="CMSIS_Include_core_cm.MIMXRT595S"/>
-          <device_dependency value="MIMXRT595S"/>
-        </all>
-      </dependencies>
-      <source relative_path="../../../Include" project_relative_path="Include" type="c_include">
-        <files mask="arm_nn_math_types.h"/>
-        <files mask="arm_nn_tables.h"/>
-        <files mask="arm_nn_types.h"/>
-        <files mask="arm_nnfunctions.h"/>
-        <files mask="arm_nnsupportfunctions.h"/>
-      </source>
-      <source relative_path="../../../Include/Internal" project_relative_path="Include/Internal" type="c_include">
-        <files mask="arm_nn_compiler.h"/>
-      </source>
-      <source relative_path="../../../Source/ActivationFunctions" project_relative_path="Source/ActivationFunctions" type="src">
-        <files mask="arm_nn_activation_s16.c"/>
-        <files mask="arm_relu6_s8.c"/>
-        <files mask="arm_relu_q15.c"/>
-        <files mask="arm_relu_q7.c"/>
-      </source>
-      <source relative_path="../../../Source/BasicMathFunctions" project_relative_path="Source/BasicMathFunctions" type="src">
-        <files mask="arm_elementwise_add_s16.c"/>
-        <files mask="arm_elementwise_add_s8.c"/>
-        <files mask="arm_elementwise_mul_s16.c"/>
-        <files mask="arm_elementwise_mul_s16_s8.c"/>
-        <files mask="arm_elementwise_mul_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/ConcatenationFunctions" project_relative_path="Source/ConcatenationFunctions" type="src">
-        <files mask="arm_concatenation_s8_w.c"/>
-        <files mask="arm_concatenation_s8_x.c"/>
-        <files mask="arm_concatenation_s8_y.c"/>
-        <files mask="arm_concatenation_s8_z.c"/>
-      </source>
-      <source relative_path="../../../Source/ConvolutionFunctions" project_relative_path="Source/ConvolutionFunctions" type="src">
-        <files mask="arm_convolve_1_x_n_s8.c"/>
-        <files mask="arm_convolve_1x1_s8.c"/>
-        <files mask="arm_convolve_1x1_s8_fast.c"/>
-        <files mask="arm_convolve_fast_s16.c"/>
-        <files mask="arm_convolve_get_buffer_sizes_s16.c"/>
-        <files mask="arm_convolve_get_buffer_sizes_s8.c"/>
-        <files mask="arm_convolve_s16.c"/>
-        <files mask="arm_convolve_s8.c"/>
-        <files mask="arm_convolve_wrapper_s16.c"/>
-        <files mask="arm_convolve_wrapper_s8.c"/>
-        <files mask="arm_depthwise_conv_3x3_s8.c"/>
-        <files mask="arm_depthwise_conv_fast_s16.c"/>
-        <files mask="arm_depthwise_conv_get_buffer_sizes_s16.c"/>
-        <files mask="arm_depthwise_conv_get_buffer_sizes_s8.c"/>
-        <files mask="arm_depthwise_conv_s16.c"/>
-        <files mask="arm_depthwise_conv_s8.c"/>
-        <files mask="arm_depthwise_conv_s8_opt.c"/>
-        <files mask="arm_depthwise_conv_wrapper_s16.c"/>
-        <files mask="arm_depthwise_conv_wrapper_s8.c"/>
-        <files mask="arm_nn_depthwise_conv_s8_core.c"/>
-        <files mask="arm_nn_mat_mult_kernel_s8_s16.c"/>
-        <files mask="arm_nn_mat_mult_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/FullyConnectedFunctions" project_relative_path="Source/FullyConnectedFunctions" type="src">
-        <files mask="arm_fully_connected_get_buffer_sizes_s16.c"/>
-        <files mask="arm_fully_connected_get_buffer_sizes_s8.c"/>
-        <files mask="arm_fully_connected_s16.c"/>
-        <files mask="arm_fully_connected_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/LSTMFunctions" project_relative_path="Source/LSTMFunctions" type="src">
-        <files mask="arm_lstm_unidirectional_s8_s16.c"/>
-      </source>
-      <source relative_path="../../../Source/NNSupportFunctions" project_relative_path="Source/NNSupportFunctions" type="src">
-        <files mask="arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
-        <files mask="arm_nn_depthwise_conv_nt_t_s16.c"/>
-        <files mask="arm_nn_depthwise_conv_nt_t_s8.c"/>
-        <files mask="arm_nn_lstm_calculate_gate_s8_s16.c"/>
-        <files mask="arm_nn_lstm_step_s8_s16.c"/>
-        <files mask="arm_nn_lstm_update_cell_state_s16.c"/>
-        <files mask="arm_nn_lstm_update_output_s8_s16.c"/>
-        <files mask="arm_nn_mat_mul_core_1x_s8.c"/>
-        <files mask="arm_nn_mat_mul_core_4x_s8.c"/>
-        <files mask="arm_nn_mat_mul_kernel_s16.c"/>
-        <files mask="arm_nn_mat_mult_nt_t_s8.c"/>
-        <files mask="arm_nn_vec_mat_mul_result_acc_s8.c"/>
-        <files mask="arm_nn_vec_mat_mult_t_s16.c"/>
-        <files mask="arm_nn_vec_mat_mult_t_s8.c"/>
-        <files mask="arm_nn_vec_mat_mult_t_svdf_s8.c"/>
-        <files mask="arm_nntables.c"/>
-        <files mask="arm_q7_to_q15_with_offset.c"/>
-        <files mask="arm_s8_to_s16_unordered_with_offset.c"/>
-      </source>
-      <source relative_path="../../../Source/PoolingFunctions" project_relative_path="Source/PoolingFunctions" type="src">
-        <files mask="arm_avgpool_get_buffer_sizes_s16.c"/>
-        <files mask="arm_avgpool_get_buffer_sizes_s8.c"/>
-        <files mask="arm_avgpool_s16.c"/>
-        <files mask="arm_avgpool_s8.c"/>
-        <files mask="arm_max_pool_s16.c"/>
-        <files mask="arm_max_pool_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/ReshapeFunctions" project_relative_path="Source/ReshapeFunctions" type="src">
-        <files mask="arm_reshape_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/SVDFunctions" project_relative_path="Source/SVDFunctions" type="src">
-        <files mask="arm_svdf_s8.c"/>
-        <files mask="arm_svdf_state_s16_s8.c"/>
-      </source>
-      <source relative_path="../../../Source/SoftmaxFunctions" project_relative_path="Source/SoftmaxFunctions" type="src">
-        <files mask="arm_nn_softmax_common_s8.c"/>
-        <files mask="arm_softmax_s16.c"/>
-        <files mask="arm_softmax_s8.c"/>
-        <files mask="arm_softmax_s8_s16.c"/>
-        <files mask="arm_softmax_u8.c"/>
-      </source>
-      <source relative_path="./" type="doc">
-        <files mask="LICENSE.txt"/>
-        <files mask="README.md"/>
-      </source>
-      <source toolchain="armgcc" relative_path="./" type="workspace">
-        <files mask="middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
-        <include_path relative_path="../../../Include" project_relative_path="Include" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT595S" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with reference kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT595S" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with reference kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
@@ -567,7 +570,7 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT595S" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT595S" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <defines>
         <define name="CMSIS_NN" value=""/>
       </defines>
@@ -648,67 +651,6 @@
         <include_path relative_path="../third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.ethosu.MIMXRT595S" name="TensorFlow Lite Micro with CMSIS-NN and Ethos-U kernels" brief="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
-      <defines>
-        <define name="CMSIS_NN" value=""/>
-      </defines>
-      <dependencies>
-        <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT595S"/>
-          <device_dependency value="MIMXRT595S"/>
-          <device_core_dependency value="cm33_MIMXRT595S"/>
-        </all>
-      </dependencies>
-      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
-        <files mask="debug_log.cpp"/>
-      </source>
-      <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
-        <files mask="add.cpp"/>
-        <files mask="conv.cpp"/>
-        <files mask="depthwise_conv.cpp"/>
-        <files mask="fully_connected.cpp"/>
-        <files mask="mul.cpp"/>
-        <files mask="pooling.cpp"/>
-        <files mask="softmax.cpp"/>
-        <files mask="svdf.cpp"/>
-        <files mask="unidirectional_sequence_lstm.cpp"/>
-      </source>
-      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
-        <files mask="activations.cpp"/>
-        <files mask="floor.cpp"/>
-        <files mask="leaky_relu.cpp"/>
-        <files mask="logistic.cpp"/>
-        <files mask="lstm_eval.cpp"/>
-        <files mask="pad.cpp"/>
-        <files mask="quantize.cpp"/>
-        <files mask="reduce.cpp"/>
-        <files mask="reshape.cpp"/>
-        <files mask="strided_slice.cpp"/>
-        <files mask="sub.cpp"/>
-        <files mask="transpose_conv.cpp"/>
-      </source>
-      <source exclude="true" relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
-        <files mask="add.cpp"/>
-        <files mask="conv.cpp"/>
-        <files mask="depthwise_conv.cpp"/>
-        <files mask="fully_connected.cpp"/>
-        <files mask="mul.cpp"/>
-        <files mask="pooling.cpp"/>
-        <files mask="softmax.cpp"/>
-        <files mask="svdf.cpp"/>
-        <files mask="unidirectional_sequence_lstm.cpp"/>
-      </source>
-      <source relative_path="../tensorflow/lite/micro/kernels/ethos_u" project_relative_path="tensorflow/lite/micro/kernels/ethos_u" type="src">
-        <files mask="ethosu.cpp"/>
-      </source>
-      <source toolchain="armgcc" relative_path="./" type="workspace">
-        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S" name="Xtensa HiFi4 NN" brief="Xtensa HiFi4 NN library binary" version="2.9.0" full_name="Xtensa HiFi4 NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/xa_nnlib_hifi4" project_base_path="eiq/tensorflow-lite/third_party/xa_nnlib_hifi4">
       <defines>
         <define name="NNLIB_V2" value=""/>
@@ -716,10 +658,10 @@
         <define name="hifi4" value=""/>
       </defines>
       <dependencies>
-        <any_of>
+        <all>
           <device_dependency value="MIMXRT595S"/>
           <device_core_dependency value="fusionf1_MIMXRT595S"/>
-        </any_of>
+        </all>
       </dependencies>
       <source relative_path="../../../include" project_relative_path="include" type="c_include">
         <files mask="xa_type_def.h"/>
@@ -752,12 +694,10 @@
       </defines>
       <dependencies>
         <all>
-          <any_of>
-            <device_dependency value="MIMXRT595S"/>
-            <device_core_dependency value="fusionf1_MIMXRT595S"/>
-          </any_of>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT595S"/>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.xa_nnlib_hifi4.binary.MIMXRT595S"/>
+          <device_dependency value="MIMXRT595S"/>
+          <device_core_dependency value="fusionf1_MIMXRT595S"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels/xtensa" project_relative_path="tensorflow/lite/micro/kernels/xtensa" type="src">

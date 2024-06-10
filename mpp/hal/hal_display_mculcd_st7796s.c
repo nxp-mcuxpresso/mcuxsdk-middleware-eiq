@@ -1,12 +1,12 @@
 /*
- * Copyright 2023-2024 NXP.
+ * Copyright 2024 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
- * @brief display dev HAL driver implementation for SSD1963 using flexio mcu-lcd 8080 interface.
+ * @brief display dev HAL driver implementation for ST7796S using flexio mcu-lcd 8080 interface.
  */
 
 /* driver includes */
@@ -25,10 +25,10 @@
 #include "hal_os.h"
 /* board configuration includes */
 
-#if (defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdSsd1963 == 1)
+#if (defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdST7796S == 1)
 
 #include "fsl_common.h"
-#include "fsl_ssd1963.h"
+#include "fsl_st7796s.h"
 #include "fsl_edma.h"
 #include "fsl_flexio_mculcd.h"
 #include "fsl_flexio_mculcd_edma.h"
@@ -47,61 +47,36 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /******** constant values ********/
-#define HAL_DISPLAY_NAME                                  "McuLcdSsd1963"
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_ROTATE              ROTATE_0
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_BUFFER_COUNT        1
+#define HAL_DISPLAY_NAME                                  "McuLcdST7796S"
+#define HAL_DISPLAY_DEV_McuLcdST7796S_ROTATE              ROTATE_0
+#define HAL_DISPLAY_DEV_McuLcdST7796S_BUFFER_COUNT        1
 /******** configurable default values ********/
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT              480U
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH               800U
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_LEFT                0
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_TOP                 0
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_RIGHT               (HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH - 1)
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_BOTTOM              (HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT - 1)
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_FORMAT              MPP_PIXEL_RGB565
+#define HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT              320U
+#define HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH               480U
+#define HAL_DISPLAY_DEV_McuLcdST7796S_LEFT                0
+#define HAL_DISPLAY_DEV_McuLcdST7796S_TOP                 0
+#define HAL_DISPLAY_DEV_McuLcdST7796S_RIGHT               (HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH - 1)
+#define HAL_DISPLAY_DEV_McuLcdST7796S_BOTTOM              (HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT - 1)
+#define HAL_DISPLAY_DEV_McuLcdST7796S_FORMAT              MPP_PIXEL_RGB565
 /* only RGB565 is supported */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_BPP                 2
+#define HAL_DISPLAY_DEV_McuLcdST7796S_BPP                 2
 /* default stripe height */
 #define HAL_SMARTDMA_STRIPES                              16
-/* these macros represent the number of are used to define a small area of the screen in
+/* these macros represent the number of small area of the screen in
  * order to set the LCD background.
  */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_LINES    10
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_COLUMNS  100
-/******** macros for LCD controller ********/
-/* pixel clock(LSHIFT clock) frequency(Hz) */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_PCLK_FREQ           30000000U
-/* horizontal synchronization width(horizontal retrace) */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_HSW                 48U
-/* horizontal front porch */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_HFP                 40U
-/* horizontal back porch */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_HBP                 0U
-/* vertical synchronization width(vertical retrace) */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_VSW                 3U
-/* vertical front porch */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_VFP                 13U
-/* vertical back porch */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_VBP                 18U
-/* SSD1963 TFT interface timing polarity flag. */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_POLARITY_FLAG       0U
-/* default panel data width */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_Panel_Data_WIDTH    kSSD1963_PanelData24Bit
-/* reference clock XTAL frequency in (Hz) */
-#define HAL_DISPLAY_DEV_McuLcdSsd1963_XTAL_FREQ           10000000U
+#define HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_LINES    20
+#define HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_COLUMNS  20
 
-#if ((HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT % HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_LINES !=0) || \
-(HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH % HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_COLUMNS !=0))
-#error "HAL_DisplayDev_McuLcdSsd1963: Number of lines and columns should be a divider of respectively panel height and width."
-#endif
-
-#if (SSD1963_DATA_WITDH != 16)
-#error "HAL_DisplayDev_McuLcdSsd1963: Data width between MCU and SSD1963 controller supported is 16"
+#if ((HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT % HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_LINES !=0) || \
+(HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH % HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_COLUMNS !=0))
+#error "HAL_DisplayDev_McuLcdST7796S: Number of lines and columns should be a divider of respectively panel height and width."
 #endif
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static ssd1963_handle_t lcd_handle;
+static st7796s_handle_t lcd_handle;
 static edma_handle_t edma_tx_handle;
 static flexio_mculcd_edma_handle_t flexio_lcd_handle;
 static hal_sema_t s_transfer_done;
@@ -122,14 +97,14 @@ static status_t hal_lcd_write_command_params(void *dbi_xfer_handle,
 static status_t hal_lcd_write_memory(void *dbi_xfer_handle,
         uint32_t command, const void *data, uint32_t len_byte);
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(display_dev_t *dev,
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Init(display_dev_t *dev,
         mpp_display_params_t *config, mpp_callback_t callback, void *param);
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Deinit(const display_dev_t *dev);
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Start(display_dev_t *dev);
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev);
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev,
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Deinit(const display_dev_t *dev);
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Start(display_dev_t *dev);
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Stop(display_dev_t *dev);
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Blit(const display_dev_t *dev,
         void *frame, int stripe);
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Getbufdesc(const display_dev_t *dev,
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Getbufdesc(const display_dev_t *dev,
         hw_buf_desc_t *in_buf, mpp_memory_policy_t *policy);
 
 /**** static variables ****/
@@ -166,48 +141,37 @@ static dbi_xfer_ops_t flexio_dbi_ops = {
                                       implementation, so don't need to set callback. */
 };
 
-/* set the SSD1963 default configuration. */
-static ssd1963_config_t ssd1963_config = {
-        .pclkFreq_Hz    = HAL_DISPLAY_DEV_McuLcdSsd1963_PCLK_FREQ,
-        .polarityFlags  = HAL_DISPLAY_DEV_McuLcdSsd1963_POLARITY_FLAG,
-        .panelDataWidth = HAL_DISPLAY_DEV_McuLcdSsd1963_Panel_Data_WIDTH,
-#if ((SSD1963_DATA_WITDH == 16))
-        .pixelInterface = kSSD1963_RGB565, /* only this format is supported. */
-#else
-        .pixelInterface = kSSD1963_RGB888,
-#endif
-        .panelWidth     = HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH,
-        .panelHeight    = HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT,
-        .hsw            = HAL_DISPLAY_DEV_McuLcdSsd1963_HSW,
-        .hfp            = HAL_DISPLAY_DEV_McuLcdSsd1963_HFP,
-        .hbp            = HAL_DISPLAY_DEV_McuLcdSsd1963_HBP,
-        .vsw            = HAL_DISPLAY_DEV_McuLcdSsd1963_VSW,
-        .vfp            = HAL_DISPLAY_DEV_McuLcdSsd1963_VFP,
-        .vbp            = HAL_DISPLAY_DEV_McuLcdSsd1963_VBP
-};
+/* set the ST7796S default configuration. */
+static st7796s_config_t st7796sConfig = {.driverPreset    = kST7796S_DriverPresetLCDPARS035,
+                                        .pixelFormat     = kST7796S_PixelFormatRGB565,
+                                        .orientationMode = kST7796S_Orientation270,
+                                        .teConfig        = kST7796S_TEDisabled,
+                                        .invertDisplay   = true,
+                                        .flipDisplay     = true,
+                                        .bgrFilter       = true};
 
 const static display_dev_operator_t s_display_dev_mcu_lcd_ops = {
-        .init        = HAL_DisplayDev_McuLcdSsd1963_Init,
-        .deinit      = HAL_DisplayDev_McuLcdSsd1963_Deinit,
-        .start       = HAL_DisplayDev_McuLcdSsd1963_Start,
-        .stop        = HAL_DisplayDev_McuLcdSsd1963_Stop,
-        .blit        = HAL_DisplayDev_McuLcdSsd1963_Blit,
-        .get_buf_desc    = HAL_DisplayDev_McuLcdSsd1963_Getbufdesc,
+        .init        = HAL_DisplayDev_McuLcdST7796S_Init,
+        .deinit      = HAL_DisplayDev_McuLcdST7796S_Deinit,
+        .start       = HAL_DisplayDev_McuLcdST7796S_Start,
+        .stop        = HAL_DisplayDev_McuLcdST7796S_Stop,
+        .blit        = HAL_DisplayDev_McuLcdST7796S_Blit,
+        .get_buf_desc    = HAL_DisplayDev_McuLcdST7796S_Getbufdesc,
 };
 
 static display_dev_t s_display_dev_mcu_lcd = {.id   = 0,
         .name = HAL_DISPLAY_NAME,
         .ops  = &s_display_dev_mcu_lcd_ops,
-        .cap  = {.width       = HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH,
-                .height      = HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT,
-                .pitch       = HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH * HAL_DISPLAY_DEV_McuLcdSsd1963_BPP,
-                .left        = HAL_DISPLAY_DEV_McuLcdSsd1963_LEFT,
-                .top         = HAL_DISPLAY_DEV_McuLcdSsd1963_TOP,
-                .right       = HAL_DISPLAY_DEV_McuLcdSsd1963_RIGHT,
-                .bottom      = HAL_DISPLAY_DEV_McuLcdSsd1963_BOTTOM,
-                .rotate      = HAL_DISPLAY_DEV_McuLcdSsd1963_ROTATE,
-                .format      = HAL_DISPLAY_DEV_McuLcdSsd1963_FORMAT,
-                .nbFrameBuffer = HAL_DISPLAY_DEV_McuLcdSsd1963_BUFFER_COUNT,
+        .cap  = {.width       = HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH,
+                .height      = HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT,
+                .pitch       = HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH * HAL_DISPLAY_DEV_McuLcdST7796S_BPP,
+                .left        = HAL_DISPLAY_DEV_McuLcdST7796S_LEFT,
+                .top         = HAL_DISPLAY_DEV_McuLcdST7796S_TOP,
+                .right       = HAL_DISPLAY_DEV_McuLcdST7796S_RIGHT,
+                .bottom      = HAL_DISPLAY_DEV_McuLcdST7796S_BOTTOM,
+                .rotate      = HAL_DISPLAY_DEV_McuLcdST7796S_ROTATE,
+                .format      = HAL_DISPLAY_DEV_McuLcdST7796S_FORMAT,
+                .nbFrameBuffer = HAL_DISPLAY_DEV_McuLcdST7796S_BUFFER_COUNT,
                 .frameBuffers = NULL,
                 .callback    = NULL,
                 .user_data   = NULL}};
@@ -227,7 +191,7 @@ static void board_flexio_transfer_callback(FLEXIO_MCULCD_Type *base,
         status_t status,
         void *user_data)
 {
-    long task_awake = 0; /* no higher prio task to wake */
+    long task_awake = false;
     hal_sema_give_isr(s_transfer_done, &task_awake);
     hal_sched_yield(task_awake);
 }
@@ -237,7 +201,7 @@ static status_t hal_lcd_write_command(void *dbi_xfer_handle,
         uint32_t command)
 {
     /* dbi_xfer_handle is actually flexio_lcd_handle,
-     * set by SSD1963_Init 4th parameter. */
+     * set by ST7796S_Init 4th parameter. */
      flexio_mculcd_edma_handle_t *flexio_lcd_handle =
              (flexio_mculcd_edma_handle_t *)dbi_xfer_handle;
 
@@ -256,7 +220,7 @@ static status_t hal_lcd_write_command_params(void *dbi_xfer_handle,
         void *data, uint32_t len_byte)
 {
     /* dbi_xfer_handle is actually flexio_lcd_handle,
-     * set by SSD1963_Init 4th parameter. */
+     * set by ST7796S_Init 4th parameter. */
     flexio_mculcd_edma_handle_t *flexio_lcd_handle =
             (flexio_mculcd_edma_handle_t *)dbi_xfer_handle;
 
@@ -280,7 +244,7 @@ static status_t hal_lcd_write_memory(void *dbi_xfer_handle,
     status_t ret = kStatus_Success;
 
     /* dbi_xfer_handle is actually s_flexioLcdHandle,
-     * set by SSD1963_Init 4th parameter. */
+     * set by ST7796S_Init 4th parameter. */
     flexio_mculcd_edma_handle_t *flexio_lcd_handle =
             (flexio_mculcd_edma_handle_t *)dbi_xfer_handle;
 
@@ -296,12 +260,12 @@ static status_t hal_lcd_write_memory(void *dbi_xfer_handle,
     ret = FLEXIO_MCULCD_TransferEDMA(flexio_lcd, flexio_lcd_handle, &xfer);
 
     if (ret != kStatus_Success) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to transfer data to LCD\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to transfer data to LCD\n");
         return kStatus_HAL_DisplayError;
     } else {
         /* Wait for transfer done. */
         if (hal_sema_take(s_transfer_done, HAL_MAX_TIMEOUT) != true) {
-            HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: LCD FLEXIO transfer error\r\n");
+            HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: LCD FLEXIO transfer error\r\n");
             return kStatus_HAL_DisplayError;
         }
     }
@@ -340,7 +304,7 @@ static hal_display_status_t hal_init_flexio_mcu_lcd(void)
     s_transfer_done = hal_sema_create_binary();
 
     if (NULL == s_transfer_done) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Semaphore create failed\r\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Semaphore create failed\r\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -355,7 +319,7 @@ static hal_display_status_t hal_init_flexio_mcu_lcd(void)
             BOARD_FLEXIO_CLOCK_FREQ);
 
     if (status != kStatus_Success) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to initialize FlexIO MCULCD\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to initialize FlexIO MCULCD\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -375,7 +339,7 @@ static hal_display_status_t hal_init_flexio_mcu_lcd(void)
             board_flexio_transfer_callback, NULL, &edma_tx_handle, NULL /* RX not used. */);
 
     if (status != kStatus_Success) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to create FlexIO_MCULCD eDMA handle\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to create FlexIO_MCULCD eDMA handle\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -390,33 +354,33 @@ static hal_display_status_t hal_flush_display(const display_dev_t *dev, const ui
 
     /* Define frame area where MCU can access. */
     /* Get buffer size */
-    uint32_t buffer_size;
+    uint32_t pixel_count;
     if (dev->cap.stripe)
     {
         top = dev->cap.stripe_height * (stripenum - 1) + dev->cap.top;
         bottom = top + dev->cap.stripe_height - 1;
-        buffer_size = dev->cap.stripe_height * dev->cap.pitch;
+        pixel_count = dev->cap.stripe_height * dev->cap.width;
     }
     else
     {
         top = dev->cap.top;
         bottom = dev->cap.bottom;
-        buffer_size = dev->cap.height * dev->cap.pitch;
+        pixel_count = dev->cap.height * dev->cap.width;
     }
 
-    status = SSD1963_SelectArea(&lcd_handle, dev->cap.left,
+    status = ST7796S_SelectArea(&lcd_handle, dev->cap.left,
             top, dev->cap.right, bottom);
 
     if (status != kStatus_Success)  {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to set display output area\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to set display output area\n");
         return kStatus_HAL_DisplayError;
     }
 
     /* Transfer data from MCU to display frame memory. */
-    status = SSD1963_WriteMemory(&lcd_handle, pdata, buffer_size);
+    status = ST7796S_WritePixels(&lcd_handle, (uint16_t *) pdata, pixel_count);
 
     if (status != kStatus_Success)  {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to write data to display\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to write data to display\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -426,7 +390,7 @@ static hal_display_status_t hal_flush_display(const display_dev_t *dev, const ui
 /*
  * this function is used to set display background to black,
  * otherwise, non-initialized data will be displayed.
- * Display mikro-e has a large frame resolution(800*480) that can not
+ * Display mikro-e has a large frame resolution(320*480) that can not
  * be provided by MCUs that have limited memory, thus a smaller frame
  * buffer will be defined and written several times until the entire
  * screen is filled with black.
@@ -441,29 +405,28 @@ static hal_display_status_t hal_set_background_to_black(void)
     int left = 0;
     int top = 0;
 
-    int backgr_buff_height = HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT / HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_LINES;
-    int backgr_buff_width = HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH / HAL_DISPLAY_DEV_McuLcdSsd1963_NB_SUB_IMG_COLUMNS;
+    int backgr_buff_height = HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT / HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_LINES;
+    int backgr_buff_width = HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH / HAL_DISPLAY_DEV_McuLcdST7796S_NB_SUB_IMG_COLUMNS;
 
     /* use black pixels as background */
-    int backgr_buff_size = backgr_buff_height * backgr_buff_width *
-            HAL_DISPLAY_DEV_McuLcdSsd1963_BPP;
+    int backgr_pix_count = backgr_buff_height * backgr_buff_width;
 
-    uint8_t *backgr_buff = (uint8_t *)hal_malloc(backgr_buff_size * sizeof(uint8_t));
+    uint8_t *backgr_buff = (uint8_t *)hal_malloc(backgr_pix_count * HAL_DISPLAY_DEV_McuLcdST7796S_BPP);
 
     if (backgr_buff == NULL) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to allocate "
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to allocate "
                 "display background buffer.\n");
         return kStatus_HAL_DisplayError;
     }
 
     /* set frame buffer pixels to black */
-    memset(backgr_buff, 0x00, backgr_buff_size * sizeof(uint8_t));
+    memset(backgr_buff, 0x00, backgr_pix_count * HAL_DISPLAY_DEV_McuLcdST7796S_BPP);
 
-    while (top != HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT) {
-        while (left != HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH) {
+    while (top != HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT) {
+        while (left != HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH) {
 
             /* Define frame area where MCU can access */
-            status = SSD1963_SelectArea(&lcd_handle, left,
+            status = ST7796S_SelectArea(&lcd_handle, left,
                     top, left + backgr_buff_width - 1,
                     top + backgr_buff_height - 1);
             if (status !=  kStatus_Success) {
@@ -471,7 +434,7 @@ static hal_display_status_t hal_set_background_to_black(void)
                 return kStatus_HAL_DisplayError;
             }
 
-            status = SSD1963_WriteMemory(&lcd_handle, backgr_buff, backgr_buff_size);
+            status = ST7796S_WritePixels(&lcd_handle, (uint16_t *) backgr_buff, backgr_pix_count);
             if (status !=  kStatus_Success) {
                 free(backgr_buff);
                 return kStatus_HAL_DisplayError;
@@ -490,11 +453,11 @@ static hal_display_status_t hal_set_background_to_black(void)
 
 }
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Init(
         display_dev_t *dev, mpp_display_params_t *config, mpp_callback_t callback, void *user_data)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
-    HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Init\n");
+    HAL_LOGD("++HAL_DisplayDev_McuLcdST7796S_Init\n");
 
     if (hal_mutex_create(&s_mutex) != MPP_SUCCESS)
     {
@@ -517,9 +480,9 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
     /* check input pixel depth versus static config */
     int pixel_depth = get_bitpp(config->format)/8;
 
-    if (pixel_depth > HAL_DISPLAY_DEV_McuLcdSsd1963_BPP) {
+    if (pixel_depth > HAL_DISPLAY_DEV_McuLcdST7796S_BPP) {
         HAL_LOGE("Pixel depth = %d higher than max =%d (defined in mpp_config.h.\n",
-                pixel_depth, HAL_DISPLAY_DEV_McuLcdSsd1963_BPP);
+                pixel_depth, HAL_DISPLAY_DEV_McuLcdST7796S_BPP);
         return kStatus_HAL_DisplayError;
     }
 
@@ -530,15 +493,15 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
             display_cap->pitch = display_cap->width * 2;
             break;
         default:
-            HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963_Init: invalid pixel format parameter.\n");
+            HAL_LOGE("HAL_DisplayDev_McuLcdST7796S_Init: invalid pixel format parameter.\n");
             return kStatus_HAL_DisplayError;
     }
 
     /* check user resolution does not exceed the screen resolution */
-    if (((config->width < 0) || (config->width > HAL_DISPLAY_DEV_McuLcdSsd1963_WIDTH))
-            || ((config->height < 0) || (config->height > HAL_DISPLAY_DEV_McuLcdSsd1963_HEIGHT))
+    if (((config->width < 0) || (config->width > HAL_DISPLAY_DEV_McuLcdST7796S_WIDTH))
+            || ((config->height < 0) || (config->height > HAL_DISPLAY_DEV_McuLcdST7796S_HEIGHT))
             || ((config->pitch < 0) || (config->pitch > display_cap->pitch))) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963_Init: invalid resolution parameter.\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S_Init: invalid resolution parameter.\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -566,11 +529,11 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
     }
 
     /* check that display area does not exceed the screen resolution */
-    if ((display_cap->bottom > HAL_DISPLAY_DEV_McuLcdSsd1963_BOTTOM)
-            || (display_cap->right > HAL_DISPLAY_DEV_McuLcdSsd1963_RIGHT)
+    if ((display_cap->bottom > HAL_DISPLAY_DEV_McuLcdST7796S_BOTTOM)
+            || (display_cap->right > HAL_DISPLAY_DEV_McuLcdST7796S_RIGHT)
             || (((display_cap->right - display_cap->left) != display_cap->width - 1))
             || ((display_cap->bottom - display_cap->top) != display_cap->height - 1)) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963_Init: invalid area parameter.\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S_Init: invalid area parameter.\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -584,12 +547,12 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Init(
     display_cap->callback = callback;
     display_cap->user_data = user_data;
 
-    HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_Init\n");
+    HAL_LOGD("--HAL_DisplayDev_McuLcdST7796S_Init\n");
 
     return ret;
 }
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Deinit(const display_dev_t *dev)
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Deinit(const display_dev_t *dev)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
 
@@ -600,55 +563,59 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Deinit(const display_dev_t *de
     return ret;
 }
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Start(display_dev_t *dev)
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Start(display_dev_t *dev)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
     status_t status = kStatus_Success;
-    HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Start\n");
+    HAL_LOGD("++HAL_DisplayDev_McuLcdST7796S_Start\n");
     display_dev_private_capability_t *display_cap = &dev->cap;
-    ssd1963_orientation_mode_t orient;
 
     /*------------------------------
      * Initialize the LCD controller
      * -----------------------------*/
-    status = SSD1963_Init(&lcd_handle, &ssd1963_config, &flexio_dbi_ops,
-            &flexio_lcd_handle, HAL_DISPLAY_DEV_McuLcdSsd1963_XTAL_FREQ);
+
+    /* first init with no rotation to set the whole screen black */
+    st7796sConfig.orientationMode = kST7796S_Orientation0;
+    status = ST7796S_Init(&lcd_handle, &st7796sConfig, &flexio_dbi_ops,
+            &flexio_lcd_handle);
 
     if (status != kStatus_Success) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to initialize panel.\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to initialize panel.\n");
         return kStatus_HAL_DisplayError;
     }
 
     /* set background to black otherwise the panel memory
      * that is not filled is random value */
     ret = hal_set_background_to_black();
-
     if (ret != kStatus_HAL_DisplaySuccess) {
         HAL_LOGI("Unable to set background image, "
                 "non display area may show random values.\n");
         ret = kStatus_HAL_DisplaySuccess;
     }
 
+    /* change orientation for video frame transfer */
     switch(display_cap->rotate)
     {
     case ROTATE_90:
-        orient = kSSD1963_Orientation90;
+        st7796sConfig.orientationMode = kST7796S_Orientation90;
         break;
     case ROTATE_180:
-        orient = kSSD1963_Orientation180;
+        st7796sConfig.orientationMode = kST7796S_Orientation180;
         break;
     case ROTATE_270:
-        orient = kSSD1963_Orientation270;
+        st7796sConfig.orientationMode = kST7796S_Orientation270;
         break;
     case ROTATE_0:
     default:
-        orient = kSSD1963_Orientation0;
+        st7796sConfig.orientationMode = kST7796S_Orientation0;
         break;
     }
+    /* re-init with rotation */
+    status = ST7796S_Init(&lcd_handle, &st7796sConfig, &flexio_dbi_ops,
+            &flexio_lcd_handle);
 
-    status = SSD1963_SetOrientationMode(&lcd_handle, orient);
     if (status != kStatus_Success) {
-        HAL_LOGE("HAL_DisplayDev_McuLcdSsd1963: Failed to change orientation.\n");
+        HAL_LOGE("HAL_DisplayDev_McuLcdST7796S: Failed to initialize panel.\n");
         return kStatus_HAL_DisplayError;
     }
 
@@ -656,19 +623,18 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Start(display_dev_t *dev)
      * Start the display
      * -----------------------*/
 
-    SSD1963_StartDisplay(&lcd_handle);
-    SSD1963_SetBackLight(&lcd_handle, 255);
+    ST7796S_EnableDisplay(&lcd_handle, true);
 
-    HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_Start\n");
+    HAL_LOGD("--HAL_DisplayDev_McuLcdST7796S_Start\n");
 
     return ret;
 }
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Stop(display_dev_t *dev)
 {
     status_t status = kStatus_Success;
 
-    HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Stop\n");
+    HAL_LOGD("++HAL_DisplayDev_McuLcdST7796S_Stop\n");
 
     if (hal_mutex_lock(s_mutex) != MPP_SUCCESS)
     {
@@ -676,14 +642,13 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
         return kStatus_HAL_DisplayError;
     }
 
-    status = SSD1963_StopDisplay(&lcd_handle);
+    /* disable display */
+    status = ST7796S_EnableDisplay(&lcd_handle, false);
 
     if (status != kStatus_Success) {
         HAL_LOGE("Failed to stop display\n");
         return kStatus_HAL_DisplayError;
     }
-
-    SSD1963_Deinit(&lcd_handle);
 
     if (hal_mutex_unlock(s_mutex) != MPP_SUCCESS)
     {
@@ -691,7 +656,7 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
         return kStatus_HAL_DisplayError;
     }
 
-    HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_Stop\n");
+    HAL_LOGD("--HAL_DisplayDev_McuLcdST7796S_Stop\n");
 
     return kStatus_HAL_DisplaySuccess;
 }
@@ -702,12 +667,12 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Stop(display_dev_t *dev)
  * @param [in] stripe stripe number, 0 means full-frame
  * @return \ref return_codes
  */
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev, void *frame,
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Blit(const display_dev_t *dev, void *frame,
         int stripe)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
 
-    HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_Blit\n");
+    HAL_LOGD("++HAL_DisplayDev_McuLcdST7796S_Blit\n");
 
     if (frame == NULL) {
         HAL_LOGE("Invalid frame buffer\n");
@@ -749,16 +714,16 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Blit(const display_dev_t *dev,
                 (void *) &checksum, dev->cap.user_data);
 #endif
 
-    HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_Blit\n");
+    HAL_LOGD("--HAL_DisplayDev_McuLcdST7796S_Blit\n");
 
     return ret;
 }
 
-hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Getbufdesc(const display_dev_t *dev, hw_buf_desc_t *in_buf,
+hal_display_status_t HAL_DisplayDev_McuLcdST7796S_Getbufdesc(const display_dev_t *dev, hw_buf_desc_t *in_buf,
         mpp_memory_policy_t *policy)
 {
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
-    HAL_LOGD("++HAL_DisplayDev_McuLcdSsd1963_GetInput\n");
+    HAL_LOGD("++HAL_DisplayDev_McuLcdST7796S_GetInput\n");
 
     do {
         if ((in_buf == NULL) || (policy == NULL)) {
@@ -775,20 +740,20 @@ hal_display_status_t HAL_DisplayDev_McuLcdSsd1963_Getbufdesc(const display_dev_t
         in_buf->addr = NULL;
     } while (false);
 
-    HAL_LOGD("--HAL_DisplayDev_McuLcdSsd1963_GetInput\n");
+    HAL_LOGD("--HAL_DisplayDev_McuLcdST7796S_GetInput\n");
 
     return ret;
 }
 
-int HAL_DisplayDev_McuLcdSsd1963_setup(display_dev_t *dev)
+int HAL_DisplayDev_McuLcdST7796S_setup(display_dev_t *dev)
 {
     dev->ops = &s_display_dev_mcu_lcd_ops;
     return 0;
 }
-#else /* !((defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdSsd1963 == 1)) */
-int HAL_DisplayDev_McuLcdSsd1963_setup(display_dev_t *dev)
+#else /* !((defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdST7796S == 1)) */
+int HAL_DisplayDev_McuLcdST7796S_setup(display_dev_t *dev)
 {
-    HAL_LOGE("Display McuLcdSsd1963 not enabled\n");
+    HAL_LOGE("Display McuLcdST7796S not enabled\n");
     return -1;
 }
-#endif /* (defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdSsd1963 == 1) */
+#endif /* (defined HAL_ENABLE_DISPLAY) && (HAL_ENABLE_DISPLAY_DEV_McuLcdST7796S == 1) */

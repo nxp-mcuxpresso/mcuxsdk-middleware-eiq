@@ -1,5 +1,5 @@
 /* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2021-2023 NXP
+   Copyright 2021-2024 NXP
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ extern tflite::MicroOpResolver &MODEL_GetOpsResolver();
 // An area of memory to use for input, output, and intermediate arrays.
 // (Can be adjusted based on the model needs.)
 constexpr int kTensorArenaSize = HAL_TFLM_TENSOR_ARENA_SIZE_KB * 1024;
-static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16);
+static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(HAL_TFLITE_BUFFER_ALIGN);
 
 status_t MODEL_Init(const void *model_data, int model_size)
 {

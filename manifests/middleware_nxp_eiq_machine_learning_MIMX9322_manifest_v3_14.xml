@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" name="eIQ" brief="eIQ machine learning (ML) middleware includes the TensorFlow™ Lite for Microcontrollers (TFLM) inference engine with code examples for inferencing machine learning models. It also provides eIQ Neutron NPU libraries for Neutron-enabled devices." format_version="3.14" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.14.xsd">
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_middleware_nxp_eiq_machine_learning_MIMX9322_manifest_v3_14" name="eIQ" brief="eIQ machine learning (ML) middleware includes the TensorFlow™ Lite for Microcontrollers (TFLM) inference engine with code examples for inferencing machine learning models. It also provides eIQ Neutron NPU libraries for Neutron-enabled devices." format_version="3.14" api_version="2.0.0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.14.xsd">
 
   <externalDefinitions>
-    <definition extID="MIMXRT1042xxxxB"/>
+    <definition extID="MIMX9322xxxxM"/>
     <definition extID="armgcc"/>
-    <definition extID="CMSIS_Include_core_cm.MIMXRT1042"/>
-    <definition extID="core0_MIMXRT1042xxxxB"/>
+    <definition extID="CMSIS_Include_core_cm.MIMX9322"/>
+    <definition extID="cm33_MIMX9322xxxxM"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" name="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT1042_manifest_v3_14" version="2.16.000" revision="2.16.000"/>
+  <ksdk id="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMX9322_manifest_v3_14" name="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMX9322_manifest_v3_14" version="2.16.000" revision="2.16.000"/>
   <components>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1042" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMX9322" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <device_dependency value="MIMXRT1042xxxxB"/>
+        <device_dependency value="MIMX9322xxxxM"/>
       </dependencies>
       <source relative_path="./tensorflow-lite/third_party/flatbuffers" project_relative_path="third_party/flatbuffers" type="doc">
         <files mask="readme.md"/>
@@ -45,9 +45,9 @@
         <include_path relative_path="./tensorflow-lite/third_party/flatbuffers/include" project_relative_path="third_party/flatbuffers/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1042" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMX9322" name="Gemmlowp" brief="Gemmlowp library" version="1.0.0" full_name="Gemmlowp library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <device_dependency value="MIMXRT1042xxxxB"/>
+        <device_dependency value="MIMX9322xxxxM"/>
       </dependencies>
       <source relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="doc">
         <files mask="LICENSE"/>
@@ -68,9 +68,9 @@
         <include_path relative_path="./tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1042" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMX9322" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <device_dependency value="MIMXRT1042xxxxB"/>
+        <device_dependency value="MIMX9322xxxxM"/>
       </dependencies>
       <source relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="doc">
         <files mask="LICENSE"/>
@@ -86,9 +86,9 @@
         <include_path relative_path="./tensorflow-lite/third_party/ruy" project_relative_path="third_party/ruy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMXRT1042" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.fft2d.MIMX9322" name="FFT2D" brief="General Purpose FFT (Fast Fourier/Cosine/Sine Transform) Package" version="1.0.0" full_name="FFT2D library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
-        <device_dependency value="MIMXRT1042xxxxB"/>
+        <device_dependency value="MIMX9322xxxxM"/>
       </dependencies>
       <source relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="src">
         <files mask="fftsg.c"/>
@@ -108,9 +108,9 @@
         <include_path relative_path="./tensorflow-lite/third_party/fft2d" project_relative_path="third_party/fft2d" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1042" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMX9322" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
       <dependencies>
-        <device_dependency value="MIMXRT1042xxxxB"/>
+        <device_dependency value="MIMX9322xxxxM"/>
       </dependencies>
       <source relative_path="./" type="src">
         <files mask="kiss_fft.c"/>
@@ -146,11 +146,11 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1042" name="CMSIS-NN" brief="CMSIS-NN library" version="23.08" full_name="CMSIS-NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis_nn" project_base_path="eiq/tensorflow-lite/third_party/cmsis_nn">
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMX9322" name="CMSIS-NN" brief="CMSIS-NN library" version="23.08" full_name="CMSIS-NN library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite/third_party/cmsis_nn" project_base_path="eiq/tensorflow-lite/third_party/cmsis_nn">
       <dependencies>
         <all>
-          <component_dependency value="CMSIS_Include_core_cm.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="CMSIS_Include_core_cm.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="../../../Include" project_relative_path="Include" type="c_include">
@@ -269,11 +269,11 @@
         <include_path relative_path="../../../Include" project_relative_path="Include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT1042" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with reference kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMX9322" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with reference kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
@@ -306,16 +306,16 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1042" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMX9322" name="TensorFlow Lite Micro with CMSIS-NN kernels" brief="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <defines>
         <define name="CMSIS_NN" value=""/>
       </defines>
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1042"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
-          <device_core_dependency value="core0_MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMX9322"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
+          <device_core_dependency value="cm33_MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
@@ -362,17 +362,17 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.binary.MIMXRT1042" name="TensorFlow Lite Micro with core specific kernels" brief="TensorFlow Lite Micro library binary with core specific kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library binary with core specific kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.binary.MIMX9322" name="TensorFlow Lite Micro with core specific kernels" brief="TensorFlow Lite Micro library binary with core specific kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library binary with core specific kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
-      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm7/armgcc" project_relative_path="lib" type="lib" device_cores="core0_MIMXRT1042xxxxB">
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm33/armgcc" project_relative_path="lib" type="lib" device_cores="cm33_MIMX9322xxxxM">
         <files mask="libtflm.a"/>
       </source>
-      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm7/armgcc" project_relative_path="lib" type="doc" device_cores="core0_MIMXRT1042xxxxB">
+      <source toolchain="armgcc mcuxpresso" relative_path="../lib/cm33/armgcc" project_relative_path="lib" type="doc" device_cores="cm33_MIMX9322xxxxM">
         <files mask="build.sh"/>
       </source>
       <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
@@ -387,13 +387,74 @@
         <include_path relative_path="../third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1042" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library header files" version="23.09.18" full_name="TensorFlow Lite Micro library header files" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.cmsis_nn.ethosu.MIMX9322" name="TensorFlow Lite Micro with CMSIS-NN and Ethos-U kernels" brief="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" version="23.09.18" full_name="TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations" category="Machine Learning/tensorflow_lite" user_visible="true" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <defines>
+        <define name="CMSIS_NN" value=""/>
+      </defines>
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1042"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1042"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMX9322"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
+          <device_core_dependency value="cm33_MIMX9322xxxxM"/>
+        </all>
+      </dependencies>
+      <source relative_path="../tensorflow/lite/micro" project_relative_path="tensorflow/lite/micro" type="src">
+        <files mask="debug_log.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels/cmsis_nn" project_relative_path="tensorflow/lite/micro/kernels/cmsis_nn" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="activations.cpp"/>
+        <files mask="floor.cpp"/>
+        <files mask="leaky_relu.cpp"/>
+        <files mask="logistic.cpp"/>
+        <files mask="lstm_eval.cpp"/>
+        <files mask="pad.cpp"/>
+        <files mask="quantize.cpp"/>
+        <files mask="reduce.cpp"/>
+        <files mask="reshape.cpp"/>
+        <files mask="strided_slice.cpp"/>
+        <files mask="sub.cpp"/>
+        <files mask="transpose_conv.cpp"/>
+      </source>
+      <source exclude="true" relative_path="../tensorflow/lite/micro/kernels" project_relative_path="tensorflow/lite/micro/kernels" type="src">
+        <files mask="add.cpp"/>
+        <files mask="conv.cpp"/>
+        <files mask="depthwise_conv.cpp"/>
+        <files mask="fully_connected.cpp"/>
+        <files mask="mul.cpp"/>
+        <files mask="pooling.cpp"/>
+        <files mask="softmax.cpp"/>
+        <files mask="svdf.cpp"/>
+        <files mask="unidirectional_sequence_lstm.cpp"/>
+      </source>
+      <source relative_path="../tensorflow/lite/micro/kernels/ethos_u" project_relative_path="tensorflow/lite/micro/kernels/ethos_u" type="src">
+        <files mask="ethosu.cpp"/>
+      </source>
+      <source toolchain="armgcc" relative_path="./" type="workspace">
+        <files mask="middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.headers.MIMX9322" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library header files" version="23.09.18" full_name="TensorFlow Lite Micro library header files" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMX9322"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMX9322"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="./" type="doc">
@@ -656,12 +717,12 @@
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.MIMXRT1042" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="23.09.18" full_name="TensorFlow Lite Micro library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.MIMX9322" name="TensorFlow Lite Micro" brief="TensorFlow Lite Micro library" version="23.09.18" full_name="TensorFlow Lite Micro library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1042"/>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.headers.MIMX9322"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="./" type="doc">
@@ -877,11 +938,11 @@
         <include_path relative_path="../third_party/kissfft" project_relative_path="third_party/kissfft" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT1042" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="23.09.18" full_name="TensorFlow Lite Micro word detection library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMX9322" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="23.09.18" full_name="TensorFlow Lite Micro word detection library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <all>
-          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1042"/>
-          <device_dependency value="MIMXRT1042xxxxB"/>
+          <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMX9322"/>
+          <device_dependency value="MIMX9322xxxxM"/>
         </all>
       </dependencies>
       <source relative_path="../tensorflow/lite/micro/examples/micro_speech" project_relative_path="tensorflow/lite/micro/examples/micro_speech" type="src">

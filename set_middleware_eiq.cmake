@@ -1,185 +1,12 @@
 include_guard(GLOBAL)
 
 
-if (CONFIG_USE_middleware_eiq_deepviewrt_deps_flatcc)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_deps_flatcc true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_deps_flatcc component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_BOARD STREQUAL evkbmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1160 OR CONFIG_BOARD STREQUAL evkbmimxrt1060 OR CONFIG_BOARD STREQUAL evkmimxrt1060 OR CONFIG_BOARD STREQUAL evkbimxrt1050 OR CONFIG_BOARD STREQUAL evkmimxrt1040 OR CONFIG_BOARD STREQUAL evkmimxrt1064))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/flatcc/include
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_deps_flatcc dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_deps_json)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_deps_json true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_deps_json component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_BOARD STREQUAL evkbmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1160 OR CONFIG_BOARD STREQUAL evkbmimxrt1060 OR CONFIG_BOARD STREQUAL evkmimxrt1060 OR CONFIG_BOARD STREQUAL evkbimxrt1050 OR CONFIG_BOARD STREQUAL evkmimxrt1040 OR CONFIG_BOARD STREQUAL evkmimxrt1064))
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/json/flex.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/json/reader.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/json/safe.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/json/writer.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/json/include
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_deps_json dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_deps_stb)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_deps_stb true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_deps_stb component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_BOARD STREQUAL evkbmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkmimxrt1160 OR CONFIG_BOARD STREQUAL evkbmimxrt1060 OR CONFIG_BOARD STREQUAL evkmimxrt1060 OR CONFIG_BOARD STREQUAL evkbimxrt1050 OR CONFIG_BOARD STREQUAL evkmimxrt1040 OR CONFIG_BOARD STREQUAL evkmimxrt1064))
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/stb/stb_image.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/stb/stb_image_resize.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/stb/stb_image_write.c
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/stb/stb_sprintf.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/deps/stb/include
-)
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_deps_stb dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_modelrunner_server component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_DEVICE_ID STREQUAL MIMXRT1042xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1052xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx OR CONFIG_DEVICE_ID STREQUAL MIMXRT1166xxxxx))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/include
-)
-
-if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/lib/libmodelrunner-rt.a
-      -Wl,--end-group
-  )
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_modelrunner_server dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server_flash)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_modelrunner_server_flash true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_modelrunner_server_flash component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_DEVICE_ID STREQUAL MIMXRT1042xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1052xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx OR CONFIG_DEVICE_ID STREQUAL MIMXRT1166xxxxx))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/include
-)
-
-if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/lib/libmodelrunner-rt-flash.a
-      -Wl,--end-group
-  )
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_modelrunner_server_flash dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_deepviewrt_nnlib)
-# Add set(CONFIG_USE_middleware_eiq_deepviewrt_nnlib true) in config.cmake to use this component
-
-message("middleware_eiq_deepviewrt_nnlib component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-if((CONFIG_DEVICE_ID STREQUAL MIMXRT1042xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1052xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxB OR CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx OR CONFIG_DEVICE_ID STREQUAL MIMXRT1166xxxxx))
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/include
-)
-
-if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
-  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/./deepviewrt/lib/libdeepview-rt-cortex-m7f.a
-      -Wl,--end-group
-  )
-endif()
-
-else()
-
-message(SEND_ERROR "middleware_eiq_deepviewrt_nnlib dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()
-
-endif()
-
-
-if (CONFIG_USE_middleware_eiq_glow)
-# Add set(CONFIG_USE_middleware_eiq_glow true) in config.cmake to use this component
-
-message("middleware_eiq_glow component is included from ${CMAKE_CURRENT_LIST_FILE}.")
-
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils/glow_bundle_utils.c
-)
-
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/./glow/bundle_utils
-)
-
-
-endif()
-
-
 if (CONFIG_USE_middleware_eiq_mpp)
 # Add set(CONFIG_USE_middleware_eiq_mpp true) in config.cmake to use this component
 
 message("middleware_eiq_mpp component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if((CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkbmimxrt1170 OR CONFIG_BOARD STREQUAL evkbimxrt1050 OR CONFIG_BOARD STREQUAL frdmmcxn947))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_camera_mipi_ov5640.c
@@ -188,19 +15,17 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_camera_csi_mt9m114.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_lcdif_rk043fn.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_mculcd_ssd1963.c
+  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_mculcd_st7796s.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_draw.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_freertos.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_graphics_pxp.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_graphics_cpu.c
+  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_graphics_vglite.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_static_image.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_utils.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_vision_algo_tflite.c
-  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_vision_algo_glow.c
-  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_vision_algo_deep_view_rt.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/tflite/model.cpp
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/tflite/model_all_ops_micro.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/glow/model.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/deep_view_rt/model.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -258,6 +83,19 @@ if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONF
   )
 endif()
 
+if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONFIG_CORE STREQUAL cm33)
+  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+      ${CMAKE_CURRENT_LIST_DIR}/./mpp/lib/cm33/libmpp.a
+      -Wl,--end-group
+  )
+endif()
+
+else()
+
+message(SEND_ERROR "middleware_eiq_mpp dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
 
 endif()
 
@@ -630,7 +468,7 @@ if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu)
 
 message("middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu component is included from ${CMAKE_CURRENT_LIST_FILE}.")
 
-if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm33 OR CONFIG_CORE STREQUAL cm7f) AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn)
+if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn AND (CONFIG_DEVICE_ID STREQUAL MIMX9322xxxxM OR CONFIG_DEVICE_ID STREQUAL MIMX9352xxxxM) AND (CONFIG_CORE STREQUAL cm4f OR CONFIG_CORE STREQUAL cm33 OR CONFIG_CORE STREQUAL cm7f))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp
@@ -794,7 +632,7 @@ if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_xtensa)
 
 message("middleware_eiq_tensorflow_lite_micro_xtensa component is included from ${CMAKE_CURRENT_LIST_FILE}.")
 
-if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S) OR (CONFIG_CORE STREQUAL dsp)) AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
+if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND (CONFIG_CORE STREQUAL dsp) AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S)) AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp
@@ -858,6 +696,30 @@ endif()
 else()
 
 message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_xtensa dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
+if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_neutron)
+# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_neutron true) in config.cmake to use this component
+
+message("middleware_eiq_tensorflow_lite_micro_neutron component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_neutron_lib_binary AND (CONFIG_DEVICE_ID STREQUAL MCXN947 OR CONFIG_DEVICE_ID STREQUAL MCXN547))
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/neutron/neutron.cpp
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/micro/kernels/neutron/.
+)
+
+else()
+
+message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_neutron dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
 
 endif()
 
@@ -982,10 +844,42 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 endif()
 
 
+if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_neutron_lib_binary)
+# Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_neutron_lib_binary true) in config.cmake to use this component
+
+message("middleware_eiq_tensorflow_lite_micro_third_party_neutron_lib_binary component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if((CONFIG_DEVICE_ID STREQUAL MCXN947 OR CONFIG_DEVICE_ID STREQUAL MCXN547))
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/common/include
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/driver/include
+)
+
+if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND (CONFIG_DEVICE_ID STREQUAL MCXN547 OR CONFIG_DEVICE_ID STREQUAL MCXN947))
+  target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    -Wl,--start-group
+      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/armgcc/libNeutronDriver.a
+      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/armgcc/libNeutronFirmware.a
+      -Wl,--end-group
+  )
+endif()
+
+else()
+
+message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_neutron_lib_binary dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
+
+endif()
+
+
 if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4)
 # Add set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 true) in config.cmake to use this component
 
 message("middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 component is included from ${CMAKE_CURRENT_LIST_FILE}.")
+
+if((CONFIG_CORE STREQUAL dsp) AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S)))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/algo/common/src/xa_nnlib_common_api.c
@@ -1174,6 +1068,11 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
+else()
+
+message(SEND_ERROR "middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()
 
 endif()
 
@@ -1183,7 +1082,7 @@ if (CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_b
 
 message("middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary component is included from ${CMAKE_CURRENT_LIST_FILE}.")
 
-if(((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S) OR (CONFIG_CORE STREQUAL dsp)))
+if((CONFIG_CORE STREQUAL dsp) AND ((CONFIG_DEVICE_ID STREQUAL MIMXRT595S OR CONFIG_DEVICE_ID STREQUAL MIMXRT685S)))
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/.
@@ -1214,6 +1113,7 @@ if(CONFIG_CORE_ID STREQUAL hifi4)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
       ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt685s/libxa_nnlib_hifi4.a
+      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt798s/libxa_nnlib_hifi4.a
       -Wl,--end-group
   )
 endif()

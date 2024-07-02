@@ -401,10 +401,10 @@
       <source relative_path="../../../driver/include" project_relative_path="driver/include" type="c_include">
         <files mask="NeutronDriver.h"/>
       </source>
-      <source toolchain="armgcc mcuxpresso" relative_path="../../../mcxn/armgcc" project_relative_path="./" type="lib">
+      <source relative_path="../../../mcxn" project_relative_path="./" type="lib">
         <files mask="libNeutronDriver.a"/>
       </source>
-      <source toolchain="armgcc mcuxpresso" relative_path="../../../mcxn/armgcc" project_relative_path="./" type="lib">
+      <source relative_path="../../../mcxn" project_relative_path="./" type="lib">
         <files mask="libNeutronFirmware.a"/>
       </source>
       <source toolchain="armgcc" relative_path="./" type="workspace">

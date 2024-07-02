@@ -402,10 +402,10 @@
       <source relative_path="../../../driver/include" project_relative_path="driver/include" type="c_include">
         <files mask="NeutronDriver.h"/>
       </source>
-      <source toolchain="armgcc mcuxpresso" relative_path="../../../mcxn/armgcc" project_relative_path="./" type="lib">
+      <source relative_path="../../../mcxn" project_relative_path="./" type="lib">
         <files mask="libNeutronDriver.a"/>
       </source>
-      <source toolchain="armgcc mcuxpresso" relative_path="../../../mcxn/armgcc" project_relative_path="./" type="lib">
+      <source relative_path="../../../mcxn" project_relative_path="./" type="lib">
         <files mask="libNeutronFirmware.a"/>
       </source>
       <source toolchain="armgcc" relative_path="./" type="workspace">
@@ -1035,7 +1035,7 @@
       <source relative_path="./mpp/hal" project_relative_path="mpp/hal/" type="src">
         <files mask="hal_camera_mipi_ov5640.c"/>
         <files mask="hal_camera_ezh_ov7670.c"/>
-        <files mask="hal_display_lcdifv2_rk055ahd091.c"/>
+        <files mask="hal_display_lcdifv2_rk055.c"/>
         <files mask="hal_camera_csi_mt9m114.c"/>
         <files mask="hal_display_lcdif_rk043fn.c"/>
         <files mask="hal_display_mculcd_ssd1963.c"/>

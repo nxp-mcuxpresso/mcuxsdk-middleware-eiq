@@ -11,7 +11,7 @@ if((CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkbmimxrt1170 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_camera_mipi_ov5640.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_camera_ezh_ov7670.c
-  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_lcdifv2_rk055ahd091.c
+  ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_lcdifv2_rk055.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_camera_csi_mt9m114.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_lcdif_rk043fn.c
   ${CMAKE_CURRENT_LIST_DIR}/./mpp/hal/hal_display_mculcd_ssd1963.c
@@ -856,11 +856,11 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/driver/include
 )
 
-if((CONFIG_TOOLCHAIN STREQUAL armgcc OR CONFIG_TOOLCHAIN STREQUAL mcux) AND (CONFIG_DEVICE_ID STREQUAL MCXN547 OR CONFIG_DEVICE_ID STREQUAL MCXN947))
+if((CONFIG_DEVICE_ID STREQUAL MCXN547 OR CONFIG_DEVICE_ID STREQUAL MCXN947))
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/armgcc/libNeutronDriver.a
-      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/armgcc/libNeutronFirmware.a
+      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/libNeutronDriver.a
+      ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/third_party/neutron/mcxn/libNeutronFirmware.a
       -Wl,--end-group
   )
 endif()

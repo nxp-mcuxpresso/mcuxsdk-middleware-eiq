@@ -106,7 +106,8 @@ void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint3
 static inline void _GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, const char *pdata,
         int font_xsize, int font_ysize, uint16_t fcolor, uint16_t bcolor, uint16_t width, int stripe_top, int stripe_bottom)
 {
-    uint8_t j, pos, t;
+    uint8_t j, t;
+    int pos;
     uint8_t temp;
     uint8_t XNum;
     uint32_t base;

@@ -18,6 +18,7 @@
 #include "fsl_common.h"
 #include "hal.h"
 #include "hal_utils.h"
+#include "hal_os.h"
 
 /* VGLite includes */
 #include "vglite_support.h"
@@ -26,6 +27,10 @@
 /* different GPUs chip ids */
 #define HAL_GPU_GC355_CHIP_ID 0x355
 #define HAL_GPU_GC555_CHIP_ID 0x555
+
+/* Tessellation buffer is not needed for blit operations */
+#define HAL_VGLITE_TESSELLATION_BUFF_WIDTH  0
+#define HAL_VGLITE_TESSELLATION_BUFF_HEIGHT 0
 
 #if defined(__cplusplus)
 extern "C" {
@@ -37,6 +42,7 @@ int HAL_GfxDev_GPU_Register();
 
 typedef struct _gfx_vglite_handle
 {
+	int vgliteInit;
     vg_lite_buffer_t input_buffer_config;   /*!< Pointer to VGLite input buffer configuration */
     vg_lite_buffer_t output_buffer_config;  /*!< Pointer to VGLite output buffer configuration */
     vg_lite_matrix_t vglite_matrix;         /*!< transformation matrix */
@@ -54,10 +60,18 @@ void *vglite_heap_base        = &vglite_heap;
 uint32_t vglite_heap_size     = HAL_VGLITE_HEAP_SZ;
 #endif
 
+static hal_mutex_t s_mutex; /* prevent stopping GPU during conversion */
+
 int HAL_GfxDev_VGLite_Init(const gfx_dev_t *dev, void *param)
 {
     status_t status = kStatus_Success;
     int error = 0;
+
+    if (hal_mutex_create(&s_mutex) != kStatus_Success)
+    {
+        HAL_LOGE("Failed to create GPU mutex\n");
+        return -1;
+    }
 
     /* initialize vglite controller */
     status = BOARD_PrepareVGLiteController();
@@ -67,12 +81,28 @@ int HAL_GfxDev_VGLite_Init(const gfx_dev_t *dev, void *param)
         return -1;
     }
 
+    /* initialize the draw
+     * if vglite is already initialized, no need to reinitialize it.*/
+    if (s_GfxVGLiteHandle.vgliteInit == 0)
+    {
+        status = vg_lite_init(HAL_VGLITE_TESSELLATION_BUFF_WIDTH, HAL_VGLITE_TESSELLATION_BUFF_HEIGHT);
+        if (status != kStatus_Success)
+        {
+            HAL_LOGE("vg_lite engine init failed: vg_lite_init() returned error %d\r\n", error);
+            vg_lite_close();
+            error = -1;
+        }
+        s_GfxVGLiteHandle.vgliteInit = 1;
+    }
+
     return error;
 }
 
 int HAL_GfxDev_VGLite_Deinit(const gfx_dev_t *dev)
 {
     int error = 0;
+    vg_lite_close();
+    hal_mutex_remove(s_mutex);
     return error;
 }
 
@@ -639,7 +669,7 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
         mpp_flip_mode_t flip_mode)
 {
     int error                                = 0;
-    vg_lite_buffer_t *input_buffer_config   = &s_GfxVGLiteHandle.input_buffer_config;
+    vg_lite_buffer_t *input_buffer_config    = &s_GfxVGLiteHandle.input_buffer_config;
     vg_lite_buffer_t *output_buffer_config   = &s_GfxVGLiteHandle.output_buffer_config;
     gfx_surface_t src, dst;
     gfx_rotate_config_t rotate;
@@ -661,12 +691,20 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
     memcpy(&dst, gfx_dst, sizeof(gfx_surface_t));
     memcpy(&rotate, gfx_rotate, sizeof(gfx_rotate_config_t));
 
+    if (hal_mutex_lock(s_mutex) != kStatus_Success)
+    {
+        HAL_LOGE("Failed to lock GPU mutex\n");
+        vg_lite_close();
+        return -1;
+    }
+
     /* setup the input buffer configuration */
     error = hal_vglite_init_input_buffer(input_buffer_config, &src);
     if (error == -1)
     {
         HAL_LOGE("hal_vglite_init_input_buffer() returned error %d\n", error);
         vg_lite_close();
+        hal_mutex_unlock(s_mutex);
         return -1;
     }
 
@@ -681,21 +719,13 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
         dst.top = gfx_dst->left;
     }
 
-    /* initialize the draw */
-    error = vg_lite_init(gfx_dst->width, gfx_dst->height);
-    if (error == -1)
-    {
-        HAL_LOGE("vg_lite engine init failed: vg_lite_init() returned error %d\r\n", error);
-        vg_lite_close();
-        return error;
-    }
-
     /* setup the output buffer configuration */
     error = hal_vglite_init_output_buffer(output_buffer_config, gfx_dst);
     if (error == -1)
     {
         HAL_LOGE("hal_vglite_init_output_buffer() returned error %d\n", error);
         vg_lite_close();
+        hal_mutex_unlock(s_mutex);
         return error;
     }
 
@@ -705,25 +735,36 @@ int HAL_GfxDev_VGLite_Blit(const gfx_dev_t *dev, const gfx_surface_t *gfx_src,
     if (error == -1)
     {
         HAL_LOGE("hal_vglite_init_surface() returned error %d\r\n", error);
+        vg_lite_close();
+        hal_mutex_unlock(s_mutex);
         return error;
     }
 
     error = vg_lite_blit(output_buffer_config, input_buffer_config, &s_GfxVGLiteHandle.vglite_matrix,
             VG_LITE_BLEND_NONE, 0, VG_LITE_FILTER_BI_LINEAR);
-    if (error == -1)
+    if (error != kStatus_Success)
     {
         HAL_LOGE("vg_lite_blit() returned error %d\r\n", error);
         vg_lite_close();
-        return error;
+        hal_mutex_unlock(s_mutex);
+        return -1;
     }
 
     /* submit command buffer to GPU */
     error = vg_lite_finish();
-    if (error == -1)
+    if (error != kStatus_Success)
     {
         HAL_LOGE("vg_lite_finish() returned error %d\r\n", error);
         vg_lite_close();
-        return error;
+        hal_mutex_unlock(s_mutex);
+        return -1;
+    }
+
+    if (hal_mutex_unlock(s_mutex) != kStatus_Success)
+    {
+        HAL_LOGE("Failed to unlock GPU mutex\n");
+        vg_lite_close();
+        error = -1;
     }
 
     return error;

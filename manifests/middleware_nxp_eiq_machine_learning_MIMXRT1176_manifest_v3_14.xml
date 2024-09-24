@@ -8,10 +8,9 @@
     <definition extID="cm4_MIMXRT1176xxxxx"/>
     <definition extID="cm7_MIMXRT1176xxxxx"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="evkmimxrt1170"/>
     <definition extID="evkbmimxrt1170"/>
   </externalDefinitions>
-  <ksdk id="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" name="MCUXpressoSDK216000_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" version="2.16.000" revision="2.16.000"/>
+  <ksdk id="MCUXpressoSDK216100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" name="MCUXpressoSDK216100_middleware_nxp_eiq_machine_learning_MIMXRT1176_manifest_v3_14" version="2.16.100" revision="2.16.100"/>
   <components>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1176" name="Flatbuffers" brief="Flatbuffers library" version="2.0.6" full_name="Flatbuffers library" category="Machine Learning/tensorflow_lite" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq/tensorflow-lite">
       <dependencies>
@@ -965,10 +964,7 @@
     <component id="middleware.eiq.mpp.MIMXRT1176" name="MPP library" brief="Multimedia Processing Pipelines Library" version="3.1.0" full_name="Multimedia Processing Pipelines Library" category="Machine Learning/mpp" user_visible="false" type="middleware" package_base_path=".././" project_base_path="eiq">
       <dependencies>
         <all>
-          <any_of>
-            <board_dependency value="evkmimxrt1170"/>
-            <board_dependency value="evkbmimxrt1170"/>
-          </any_of>
+          <board_dependency value="evkbmimxrt1170"/>
           <device_dependency value="MIMXRT1176xxxxx"/>
         </all>
       </dependencies>

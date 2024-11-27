@@ -13,3 +13,4 @@ mcux_add_source(
 endif()
 
 mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/tensorflow-lite)
+mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/mpp)

@@ -14,3 +14,7 @@ endif()
 
 mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/tensorflow-lite)
 mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/mpp)
+
+if(CONFIG_MCUX_COMPONENT_middleware.eiq.executorch)
+    mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/executorch/examples/nxp/runtime/imxrt700)
+endif()

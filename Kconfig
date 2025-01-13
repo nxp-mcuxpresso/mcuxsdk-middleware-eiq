@@ -1,3 +1,4 @@
 menu "eIQ"
     rsource "./**/Kconfig"
+    rsource "executorch/examples/nxp/runtime/imxrt700/Kconfig"
 endmenu

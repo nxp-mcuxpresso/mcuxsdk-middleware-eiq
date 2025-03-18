@@ -1,0 +1,7 @@
+Name: mcuxsdk-middleware-eiq
+Outgoing License: BSD-3-Clause
+License File: LICENSE
+Format: source code
+Description: eIQ Middlware for MCU Devices.
+Relese Location: https://github.com/nxp-mcuxpresso/mcuxsdk-middleware-eiq
+Origin: NXP (BSD-3-Clause)

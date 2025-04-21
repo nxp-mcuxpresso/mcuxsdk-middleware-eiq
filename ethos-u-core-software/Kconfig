@@ -1,0 +1,6 @@
+menu "Arm(R) Ethos(TM)-U core software"
+    config MCUX_COMPONENT_middleware.eiq.ethosu.application
+        bool "application inference process APIs"
+    config MCUX_COMPONENT_middleware.eiq.ethosu.core_driver
+        bool "core driver"
+endmenu

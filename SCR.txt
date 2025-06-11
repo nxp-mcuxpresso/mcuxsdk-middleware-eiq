@@ -1,7 +1,9 @@
 Name: mcuxsdk-middleware-eiq
+Version: 25.06
 Outgoing License: BSD-3-Clause
 License File: LICENSE
 Format: source code
 Description: eIQ Middlware for MCU Devices.
 Relese Location: https://github.com/nxp-mcuxpresso/mcuxsdk-middleware-eiq
 Origin: NXP (BSD-3-Clause)
+        Arm Limited ethos-u-core-software v22.08 (Apache-2.0) - https://git.mlplatform.org/ml/ethos-u/ethos-u-core-software.git

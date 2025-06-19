@@ -1,0 +1,64 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2025-06-09T06:26:31Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.20"
+  },
+  "name": "mcux-sdk-middleware-eiq-v25.06.00",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/afbc00ca-ffe6-4761-ad57-e26e1620a86f",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-afbc00ca-ffe6-4761-ad57-e26e1620a86f",
+      "name": "mcux-sdk-middleware-eiq",
+      "versionInfo": "v25.06.00",
+      "licenseConcluded": "(BSD-3-Clause)",
+      "licenseDeclared": "(BSD-3-Clause)",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: NXP",
+      "externalRefs": [],
+      "filesAnalyzed": false,
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-package-4fc4e20e-8e56-4508-be5a-2bc4c877d425",
+      "name": "ethos-u-vela",
+      "versionInfo": "4.2.0",
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "homepage": "https://git.mlplatform.org/ml/ethos-u/ethos-u-vela.git/",
+      "downloadLocation": "https://pypi.org/project/ethos-u-vela/4.2.0",
+      "originator": "Organization: pypi",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:pypi/ethos-u-vela@4.2.0",
+          "referenceType": "purl"
+        },
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "5991a48d-7579-4269-9c38-31b2651a78e5",
+          "referenceType": "BlackDuck-ComponentOrigin"
+        }
+      ],
+      "filesAnalyzed": false
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-afbc00ca-ffe6-4761-ad57-e26e1620a86f"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-afbc00ca-ffe6-4761-ad57-e26e1620a86f",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-4fc4e20e-8e56-4508-be5a-2bc4c877d425"
+    }
+  ]
+}

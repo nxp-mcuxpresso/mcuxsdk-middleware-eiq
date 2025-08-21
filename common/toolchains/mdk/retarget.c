@@ -70,3 +70,6 @@ char *$Sub$$_sys_command_string(char *cmd, int len)
 {
     return NULL;
 }
+
+void _atexit_init(void) {}
+void *_atexit_mutex = 0;

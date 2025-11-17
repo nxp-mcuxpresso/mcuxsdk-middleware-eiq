@@ -1,4 +1,6 @@
 menu "eIQ"
+    config MCUX_COMPONENT_middleware.eiq.neutron
+        bool "Enable neutron"
     rsource "./**/Kconfig"
     osource "middleware/eiq/executorch/examples/nxp/runtime/imxrt700/Kconfig"
 endmenu

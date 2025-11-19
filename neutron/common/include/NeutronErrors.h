@@ -27,7 +27,7 @@ typedef int32_t NeutronError;
 
 #define ENONE 0
 
-#define GET_ERROR_COMPONENT(e) ((e >> 0) & 0x00000007)
+#define GET_ERROR_COMPONENT(e) ((e >> 0) & 0x00000003)
 #define GET_ERROR_CATEGORY(e)  ((e >> 3) & 0x0000001F)
 #define GET_ERROR_CODE(e)      ((e >> 8) & 0x007FFFFF)
 

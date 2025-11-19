@@ -5,6 +5,13 @@ mcux_add_source(
     SOURCES middleware/eiq/common/toolchains/iar/retarget.c
 )
 
+mcux_add_source(
+    TOOLCHAINS mdk
+    BASE_PATH ${SdkRootDirPath}
+    SOURCES middleware/eiq/common/toolchains/mdk/retarget.c
+)
+endif()
+
 if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
   mcux_add_source(
     BASE_PATH ${CMAKE_CURRENT_LIST_DIR}
@@ -39,13 +46,6 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
   mcux_add_iar_configuration(
     LD "--diag_suppress Li026,Lt069"
     )
-endif()
-
-mcux_add_source(
-    TOOLCHAINS mdk
-    BASE_PATH ${SdkRootDirPath}
-    SOURCES middleware/eiq/common/toolchains/mdk/retarget.c
-)
 endif()
 
 mcux_add_cmakelists(${SdkRootDirPath}/middleware/eiq/tensorflow-lite)

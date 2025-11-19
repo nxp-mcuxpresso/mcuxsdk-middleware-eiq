@@ -16,12 +16,6 @@ extern "C" {
 
 #include "NeutronErrors.h"
 
-/// Trace configuration to enable kernel level tracing.
-#define TRACE_CONFIG_KERNEL_LEVEL (1U << 0)
-
-/// Trace confinguration to enable job level tracing.
-#define TRACE_CONFIG_JOB_LEVEL (1U << 1)
-
 // Macro to define where to allocate memory for NeutronCtx
 #ifndef NO_HEAP_USAGE
 #define NO_HEAP_USAGE 0
@@ -85,23 +79,6 @@ typedef struct {
 
 } NeutronDataConfig;
 
-typedef struct {
-    /// Sets whether tracing should be executed during firmware run or not.
-    /// If set to 0, tracing will not run.
-    /// If set to 1 - kernel level tracing.
-    /// If set to 2 - job level tracing.
-    /// If set to 3 - mixed level tracing
-    uint32_t traceConfig;
-
-    /// Buffer to store collected trace data.
-    /// If it is NULLPTR, driver will allocate the memory, otherwise, application can.
-    char *traceBuffer;
-
-    /// What is the allocated memory for buffer. Needed to check if appending string will be out of bounds.
-    /// Application should set this, if the buffer is allocated by application, otherwise driver will set the value.
-    size_t traceBufferSize;
-} NeutronTraceConfig;
-
 /// This structure contains the prototypes for functions that have a custom implementation.
 /// Any new functions or variables must be added at the end.
 typedef struct {
@@ -162,14 +139,6 @@ NeutronError neutronWait(NeutronModelHandle hdl, const NeutronDataConfig *dcfg);
 /// - Query if the job is done by Neutron.
 /// - This functionality is only available for neutronRunNonBlocking.
 NeutronError neutronIsReady(NeutronModelHandle hdl, bool *isReady);
-
-#ifndef NDEBUG
-/// - Set tracing information.
-void neutronSetTrace(NeutronModelHandle hdl, NeutronTraceConfig *tcfg);
-
-/// - Get tracing result to buffer.
-NeutronError neutronGetTrace(NeutronModelHandle hdl, char **buffer, size_t *size);
-#endif
 
 /// - Perform power management to suspend Neutron hardware.
 //  - This function disables the clock for Neutron.

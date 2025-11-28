@@ -39,7 +39,7 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
     DEVICE_IDS MIMXRT798S
     )
   mcux_add_library(
-    LIBS neutron/rt2660/libNeutronDriver.a
+    LIBS ../eiq_int/neutron/rt2660/libNeutronDriver.a
     TOOLCHAINS armgcc mcux mdk iar
     DEVICE_IDS MIMXRT2662xxxxx
     )

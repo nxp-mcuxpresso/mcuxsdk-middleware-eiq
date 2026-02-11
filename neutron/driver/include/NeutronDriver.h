@@ -25,8 +25,10 @@ extern "C" {
 #define GEN_NEUTRON_DRIVER_ERROR(category, code) GEN_NEUTRON_ERROR(ERROR_COMPONENT_DRIVER, category, code)
 #define GEN_NEUTRON_DRIVER_GENERIC_ERROR()       GEN_NEUTRON_DRIVER_ERROR(ERROR_CATEGORY_DRIVER_GENERIC, __LINE__)
 
-/// Type definition for a Neutron model handle. This is an identifier used to uniquely identify a model.
-/// The convention is that the value NEUTRON_INVALID_HANDLE handle corresponds to an invalid handle.
+/// Type definition for a Neutron model handle. This is an identifier used to uniquely identify a model or subgraph.
+/// A model refers to a complete ML model, or a subgraph that represents a portion of a model offloaded to the Neutron
+/// hardware accelerator. The convention is that the value NEUTRON_INVALID_HANDLE handle corresponds to an invalid
+/// handle.
 typedef void *NeutronModelHandle;
 
 typedef struct {
@@ -54,6 +56,13 @@ typedef struct {
     /// Timeout seconds for the microcode running.
     /// This timeout is the uplimit seconds that a user expect to complete, default 60.
     uint32_t timeoutSeconds;
+
+    /// Neutron subgraph name.
+    /// The neutron subgraph name is passed by reference to the Neutron-driver.
+    /// The neutron subgraph name is specific for a given ML model.
+    /// The neutron subgraph name is used to generate the profiling data file.
+    /// If NULL, the default string, "NeutronGraph", will be used.
+    const char *subgraphName;
 
 } NeutronModelConfig;
 

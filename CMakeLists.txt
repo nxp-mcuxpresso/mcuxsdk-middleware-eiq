@@ -43,8 +43,14 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
     TOOLCHAINS armgcc mcux mdk iar
     DEVICE_IDS MIMXRT2662xxxxx
     )
+  mcux_add_source(
+    BASE_PATH ${CMAKE_CURRENT_LIST_DIR}
+    SOURCES ../eiq_int/neutron/rt2660/NeutronFirmware.elf
+    TOOLCHAINS armgcc mcux mdk
+    DEVICE_IDS MIMXRT2662xxxxx
+    )
   mcux_add_iar_configuration(
-    LD "--diag_suppress Li026,Lt069"
+    LD "--diag_suppress Li026,Lt065,Lt066,Lt069"
     )
 endif()
 

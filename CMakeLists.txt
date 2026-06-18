@@ -41,13 +41,13 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
   mcux_add_library(
     LIBS ../eiq_int/neutron/rt2660/libNeutronDriver.a
     TOOLCHAINS armgcc mcux mdk iar
-    DEVICE_IDS MIMXRT2662xxxxx
+    DEVICE_IDS MIMXRT2661xxxxx MIMXRT2662xxxxx MIMXRT2663xxxxx
     )
   mcux_add_source(
     BASE_PATH ${CMAKE_CURRENT_LIST_DIR}
     SOURCES ../eiq_int/neutron/rt2660/NeutronFirmware.elf
     TOOLCHAINS armgcc mcux mdk
-    DEVICE_IDS MIMXRT2662xxxxx
+    DEVICE_IDS MIMXRT2661xxxxx MIMXRT2662xxxxx MIMXRT2663xxxxx
     )
   mcux_add_iar_configuration(
     LD "--diag_suppress Li026,Lt065,Lt066,Lt069"
@@ -83,13 +83,13 @@ if(CONFIG_MCUX_PRJSEG_middleware.eiq.neutron)
   mcux_add_library(
     LIBS ../eiq_int/neutron/rt2660/libNeutronDriver.a
     TOOLCHAINS armgcc mcux mdk iar
-    DEVICE_IDS MIMXRT2662xxxxx
+    DEVICE_IDS MIMXRT2661xxxxx MIMXRT2662xxxxx MIMXRT2663xxxxx
     )
   mcux_add_source(
     BASE_PATH ${CMAKE_CURRENT_LIST_DIR}
     SOURCES ../eiq_int/neutron/rt2660/NeutronFirmware.elf
     TOOLCHAINS armgcc mcux mdk
-    DEVICE_IDS MIMXRT2662xxxxx
+    DEVICE_IDS MIMXRT2661xxxxx MIMXRT2662xxxxx MIMXRT2663xxxxx
     )
   mcux_add_iar_configuration(
     LD "--diag_suppress Li026,Lt065,Lt066,Lt069"

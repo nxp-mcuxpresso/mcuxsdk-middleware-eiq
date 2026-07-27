@@ -39,7 +39,6 @@
 #include <inttypes.h>
 
 #if ETHOSU_LOG_SEVERITY >= ETHOSU_LOG_DEBUG
-#include "tensorflow/lite/micro/micro_string.h"
 namespace tflite {
     class NxpMicroErrorReporter : public ErrorReporter {
     public:
@@ -162,14 +161,19 @@ bool InferenceProcess::runEthosuOp(InferenceJob &job) {
     int custom_data_size = job.networkModel.size;
     uint64_t arena_addr = PTR_TO_UINT64(job.input[0].data) + job.arenaOffset;
     uint64_t base_addr[NUM_BASE_ADDR] = {0};
+    size_t base_addr_size[NUM_BASE_ADDR] = {0};
 
     base_addr[1] = arena_addr;
+    base_addr_size[1] = job.input[0].size - job.arenaOffset;
+
     if (job.input.size() == 2) {
 	// Flash memory at first
         base_addr[0] = PTR_TO_UINT64(job.input[1].data) + job.flashOffset;
+	base_addr_size[0] = job.input[1].size - job.flashOffset;
     } else {
 	// No flash tensor
         base_addr[0] = arena_addr;
+	base_addr_size[0] = job.input[0].size - job.arenaOffset;
     }
 
     struct ethosu_driver* drv = ethosu_reserve_driver();
@@ -182,7 +186,7 @@ bool InferenceProcess::runEthosuOp(InferenceJob &job) {
         auto qread_buffer = reinterpret_cast<EthosuQreadEvent*>(job.output[0].data);
         size_t buffer_size = job.output[0].size / sizeof(EthosuQreadEvent);
         int ret = ethosu_invoke_async(drv, custom_data_ptr, custom_data_size, base_addr,
-                         NULL, NUM_BASE_ADDR, 0);
+                         base_addr_size, NUM_BASE_ADDR, 0);
         if (ret < 0) {
              return true;
         }
@@ -206,7 +210,7 @@ bool InferenceProcess::runEthosuOp(InferenceJob &job) {
         }
     } else {
         int ret = ethosu_invoke_v3(drv, custom_data_ptr, custom_data_size, base_addr,
-                         NULL, NUM_BASE_ADDR, 0);
+                         base_addr_size, NUM_BASE_ADDR, 0);
         if (ret != 0) {
             return true;
         }

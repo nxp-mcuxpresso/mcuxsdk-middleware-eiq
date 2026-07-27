@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019-2022 Arm Limited. All rights reserved.
- *
+ * SPDX-FileCopyrightText: Copyright 2019-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-FileCopyrightText: Copyright 2025 Alif Semiconductor
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the License); you may
@@ -37,16 +37,19 @@ extern "C" {
  * Defines
  ******************************************************************************/
 
-#define ETHOSU_DRIVER_VERSION_MAJOR 0  ///< Driver major version
-#define ETHOSU_DRIVER_VERSION_MINOR 16 ///< Driver minor version
-#define ETHOSU_DRIVER_VERSION_PATCH 0  ///< Driver patch version
+#define ETHOSU_DRIVER_VERSION_MAJOR 1 ///< Driver major version
+#define ETHOSU_DRIVER_VERSION_MINOR 0 ///< Driver minor version
+#define ETHOSU_DRIVER_VERSION_PATCH 0 ///< Driver patch version
+
+#define ETHOSU_SEMAPHORE_WAIT_FOREVER (UINT64_MAX)
+
+#ifndef ETHOSU_SEMAPHORE_WAIT_INFERENCE
+#define ETHOSU_SEMAPHORE_WAIT_INFERENCE ETHOSU_SEMAPHORE_WAIT_FOREVER
+#endif
 
 /******************************************************************************
  * Types
  ******************************************************************************/
-
-// Forward declare
-struct ethosu_device;
 
 enum ethosu_job_state
 {
@@ -55,9 +58,17 @@ enum ethosu_job_state
     ETHOSU_JOB_DONE
 };
 
+enum ethosu_job_result
+{
+    ETHOSU_JOB_RESULT_OK = 0,
+    ETHOSU_JOB_RESULT_TIMEOUT,
+    ETHOSU_JOB_RESULT_ERROR
+};
+
 struct ethosu_job
 {
     volatile enum ethosu_job_state state;
+    volatile enum ethosu_job_result result;
     const void *custom_data_ptr;
     int custom_data_size;
     const uint64_t *base_addr;
@@ -68,14 +79,13 @@ struct ethosu_job
 
 struct ethosu_driver
 {
-    struct ethosu_device *dev;
+    struct ethosu_device dev;
     struct ethosu_driver *next;
     struct ethosu_job job;
     void *semaphore;
     uint64_t fast_memory;
     size_t fast_memory_size;
     uint32_t power_request_counter;
-    bool status_error;
     bool reserved;
 };
 
@@ -98,43 +108,133 @@ enum ethosu_request_clients
 
 /**
  * Interrupt handler to be called on IRQ from Ethos-U
+ *
+ * @param drv       Pointer to driver handle
  */
 void ethosu_irq_handler(struct ethosu_driver *drv);
 
-/*
- * Flush/clean the data cache by address and size. Passing NULL as p argument
- * expects the whole cache to be flushed.
+/**
+ * Flush/clean the data cache
+ *
+ * Addresses passed to this function must be aligned to cache line size.
+ *
+ * @param base_addr         Array of 32 byte aligned base addresses
+ * @param base_addr_size    Array with size per each base addr entry
+ * @param num_base_addr     Number of base addr entries
  */
+void ethosu_flush_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr);
 
-void ethosu_flush_dcache(uint32_t *p, size_t bytes);
-/*
- * Invalidate the data cache by address and size. Passing NULL as p argument
- * expects the whole cache to be invalidated.
+/**
+ * Invalidate the data cache
+ *
+ * Addresses passed to this function must be aligned to cache line size.
+ *
+ * @param base_addr         Array of 32 byte aligned base addresses
+ * @param base_addr_size    Array with size per each base addr entry
+ * @param num_base_addr     Number of base addr entries
  */
-void ethosu_invalidate_dcache(uint32_t *p, size_t bytes);
+void ethosu_invalidate_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr);
 
-/*
- * Minimal sempahore and mutex implementation for baremetal applications. See
+/**
+ * Minimal mutex implementation for baremetal applications. See
  * ethosu_driver.c.
+ *
+ * @return Pointer to mutex handle
  */
 void *ethosu_mutex_create(void);
+
+/**
+ * Destroy mutex.
+ *
+ * @param mutex     Pointer to mutex handle
+ */
+void ethosu_mutex_destroy(void *mutex);
+
+/**
+ * Minimal sempahore implementation for baremetal applications. See
+ * ethosu_driver.c.
+ *
+ * @return Pointer to semaphore handle
+ */
 void *ethosu_semaphore_create(void);
-/*
- * Returns:
- *   -1 on error
- *    0 on success
+
+/**
+ * Destroy semaphore.
+ *
+ * @param sem       Pointer to semaphore handle
+ */
+void ethosu_semaphore_destroy(void *sem);
+
+/**
+ * Lock mutex.
+ *
+ * @param mutex     Pointer to mutex handle
+ * @returns 0 on success, else negative error code
  */
 int ethosu_mutex_lock(void *mutex);
+
+/**
+ * Unlock mutex.
+ *
+ * @param mutex     Pointer to mutex handle
+ * @returns 0 on success, else negative error code
+ */
 int ethosu_mutex_unlock(void *mutex);
-int ethosu_semaphore_take(void *sem);
+
+/**
+ * Take semaphore.
+ *
+ * @param sem       Pointer to semaphore handle
+ * @param timeout   Timeout value (unit impl. defined)
+ * @returns 0 on success else negative error code
+ */
+int ethosu_semaphore_take(void *sem, uint64_t timeout);
+
+/**
+ * Give semaphore.
+ *
+ * @param sem       Pointer to semaphore handle
+ * @returns 0 on success, else negative error code
+ */
 int ethosu_semaphore_give(void *sem);
 
-/*
- * Callbacks for begin/end of inference. user_data pointer is passed to the
- * ethosu_invoke() call and forwarded to the callback functions.
+/**
+ * Callback invoked just before the inference is started.
+ *
+ * @param drv       Pointer to driver handle
+ * @param user_arg  User argument provided to ethosu_invoke_*()
  */
 void ethosu_inference_begin(struct ethosu_driver *drv, void *user_arg);
+
+/**
+ * Callback invoked just after the inference has completed.
+ *
+ * @param drv       Pointer to driver handle
+ * @param user_arg  User argument provided to ethosu_invoke_*()
+ */
 void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg);
+
+/**
+ * Remapping command stream and base pointer addresses.
+ *
+ * @param address   Address to be remapped.
+ * @param index     -1 command stream, 0-n base address index
+ *
+ * @return Remapped address
+ */
+uint64_t ethosu_address_remap(uint64_t address, int index);
+
+/**
+ * Select configuration for region access.
+ *
+ * Default implementation uses NPU_QCONFIG and NPU_REGIONCFG_n defines.
+ *
+ * @param address   Address of region.
+ * @param index     -1 command stream, 0-n base address index
+ *
+ * @return Configuration to use
+ */
+unsigned int ethosu_config_select(uint64_t address, int index);
 
 /******************************************************************************
  * Prototypes
@@ -142,9 +242,17 @@ void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg);
 
 /**
  * Initialize the Ethos-U driver.
+ *
+ * @param drv               Pointer to driver handle
+ * @param base_address      NPU register base address
+ * @param fast_memory       Fast memory area, used for Ethos-U65 with spilling
+ * @param fast_memory_size  Size in bytes of fast memory area
+ * @param secure_enable     Configure NPU in secure- or non-secure mode
+ * @param privilege_enable  Configure NPU in privileged- or non-privileged mode
+ * @return 0 on success, else negative error code
  */
 int ethosu_init(struct ethosu_driver *drv,
-                const void *base_address,
+                void *const base_address,
                 const void *fast_memory,
                 const size_t fast_memory_size,
                 uint32_t secure_enable,
@@ -152,44 +260,69 @@ int ethosu_init(struct ethosu_driver *drv,
 
 /**
  * Deinitialize the Ethos-U driver.
+ *
+ * @param drv       Pointer to driver handle
  */
 void ethosu_deinit(struct ethosu_driver *drv);
 
 /**
  * Soft resets the Ethos-U device.
+ *
+ * @param drv       Pointer to driver handle
+ * @return 0 on success, else negative error code
  */
-bool ethosu_soft_reset(struct ethosu_driver *drv);
+int ethosu_soft_reset(struct ethosu_driver *drv);
 
 /**
  * Request to disable Q-channel power gating of the Ethos-U device.
  * Power requests are ref.counted. Increases count.
  * (Note: clock gating is made to follow power gating)
+ *
+ * @param drv       Pointer to driver handle
+ * @return 0 on success, else negative error code
  */
-bool ethosu_request_power(struct ethosu_driver *drv);
+int ethosu_request_power(struct ethosu_driver *drv);
 
 /**
  * Release disable request for Q-channel power gating of the Ethos-U device.
  * Power requests are ref.counted. Decreases count.
+ *
+ * @param drv       Pointer to driver handle
  */
 void ethosu_release_power(struct ethosu_driver *drv);
 
 /**
  * Get Ethos-U driver version.
+ *
+ * @param ver       Driver version struct
  */
 void ethosu_get_driver_version(struct ethosu_driver_version *ver);
 
 /**
  * Get Ethos-U hardware information.
+ *
+ * @param drv       Pointer to driver handle
+ * @param hw        Hardware information struct
  */
 void ethosu_get_hw_info(struct ethosu_driver *drv, struct ethosu_hw_info *hw);
 
 /**
- * Invoke Vela command stream.
+ * Invoke command stream.
+ *
+ * @param drv               Pointer to driver handle
+ * @param custom_data_ptr   Custom data payload
+ * @param custom_data_size  Size in bytes of custom data
+ * @param base_addr         Array of base address pointers
+ * @param base_addr_size    Size in bytes of each address in base_addr
+ * @param num_base_addr     Number of elements in base_addr array
+ * @param user_arg          User argument, will be passed to
+ *                          ethosu_inference_begin() and ethosu_inference_end()
+ * @return 0 on success, else negative error code
  */
 int ethosu_invoke_v3(struct ethosu_driver *drv,
                      const void *custom_data_ptr,
                      const int custom_data_size,
-                     const uint64_t *base_addr,
+                     uint64_t *const base_addr,
                      const size_t *base_addr_size,
                      const int num_base_addr,
                      void *user_arg);
@@ -198,16 +331,15 @@ int ethosu_invoke_v3(struct ethosu_driver *drv,
     ethosu_invoke_v3(drv, custom_data_ptr, custom_data_size, base_addr, base_addr_size, num_base_addr, 0)
 
 /**
- * Invoke Vela command stream using async interface.
+ * Invoke command stream using async interface.
  * Must be followed by call(s) to ethosu_wait() upon successful return.
- * Returns
- *   -1 on error
- *    0 on success
+ *
+ * @see ethosu_invoke_v3 for documentation.
  */
 int ethosu_invoke_async(struct ethosu_driver *drv,
                         const void *custom_data_ptr,
                         const int custom_data_size,
-                        const uint64_t *base_addr,
+                        uint64_t *const base_addr,
                         const size_t *base_addr_size,
                         const int num_base_addr,
                         void *user_arg);
@@ -216,44 +348,58 @@ int ethosu_invoke_async(struct ethosu_driver *drv,
  * Wait for inference to complete (block=true)
  * Poll status or finish up if inference is complete (block=false)
  * (This function is only intended to be used in conjuction with ethosu_invoke_async)
- * Returns
- *    1 on inference running (only for block=false)
- *    0 on inference success
- *   -1 on inference error
- *   -2 on inference not invoked
+ *
+ * @param drv       Pointer to driver handle
+ * @param block     If call should block if inference is running
+ * @return -2 on inference not invoked, -1 on inference error, 0 on success, 1 on inference running
  */
 int ethosu_wait(struct ethosu_driver *drv, bool block);
 
 /**
- * Reserves a driver to execute inference with
+ * Reserves a driver to execute inference with. Call will block until a driver
+ * is available.
+ *
+ * @return Pointer to driver handle.
  */
 struct ethosu_driver *ethosu_reserve_driver(void);
 
 /**
- * Change driver status to available
+ * Release driver that was previously reserved with @see ethosu_reserve_driver.
+ *
+ * @param drv       Pointer to driver handle
  */
 void ethosu_release_driver(struct ethosu_driver *drv);
 
+/**
+ * Static inline for backwards-compatibility.
+ *
+ * @see ethosu_invoke_v3 for documentation.
+ */
+static inline int ethosu_invoke_v2(const void *custom_data_ptr,
+                                   const int custom_data_size,
+                                   uint64_t *const base_addr,
+                                   const size_t *base_addr_size,
+                                   const int num_base_addr)
+{
+    struct ethosu_driver *drv = ethosu_reserve_driver();
+    if (!drv)
+    {
+        return -1;
+    }
+    int result = ethosu_invoke_v3(drv, custom_data_ptr, custom_data_size, base_addr, base_addr_size, num_base_addr, 0);
+    ethosu_release_driver(drv);
+    return result;
+}
+
+#if (defined(CPU_MIMX9322CVXXM_cm33) || defined(CPU_MIMX9322DVXXM_cm33) || defined(CPU_MIMX9322XVXXM_cm33) || \
+     defined(CPU_MIMX9352AVTXM_cm33) || defined(CPU_MIMX9352CVVXM_cm33) || defined(CPU_MIMX9352DVVXM_cm33) || \
+     defined(CPU_MIMX9352XVVXM_cm33) || defined(CPU_MIMX93W52610GCM_cm33))
 /**
  * Suspend and resume Ethos-U
  */
 void ethosu_suspend(void);
 void ethosu_resume(void);
-
-/**
- * Static inline for backwards-compatibility
- */
-static inline int ethosu_invoke_v2(const void *custom_data_ptr,
-                                   const int custom_data_size,
-                                   const uint64_t *base_addr,
-                                   const size_t *base_addr_size,
-                                   const int num_base_addr)
-{
-    struct ethosu_driver *drv = ethosu_reserve_driver();
-    int result = ethosu_invoke_v3(drv, custom_data_ptr, custom_data_size, base_addr, base_addr_size, num_base_addr, 0);
-    ethosu_release_driver(drv);
-    return result;
-}
+#endif
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2019-2022 Arm Limited. All rights reserved.
- *
+ * SPDX-FileCopyrightText: Copyright 2019-2025 Arm Limited and/or its affiliates <open-source-office@arm.com>
+ * SPDX-FileCopyrightText: Copyright 2025 Alif Semiconductor
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the License); you may
@@ -15,6 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/******************************************************************************
+ * Includes
+ ******************************************************************************/
 
 #include "ethosu_interface.h"
 
@@ -34,6 +38,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/******************************************************************************
+ * Defines
+ ******************************************************************************/
+
 #define ETHOSU_PRODUCT_U55 0
 #define ETHOSU_PRODUCT_U65 1
 
@@ -49,15 +57,46 @@
 
 #define NPU_CMD_PWR_CLK_MASK (0xC)
 
-struct ethosu_device *ethosu_dev_init(const void *base_address, uint32_t secure_enable, uint32_t privilege_enable)
-{
-    struct ethosu_device *dev = malloc(sizeof(struct ethosu_device));
-    if (!dev)
-    {
-        LOG_ERR("Failed to allocate memory for Ethos-U device");
-        return NULL;
-    }
+/******************************************************************************
+ * Functions
+ ******************************************************************************/
 
+uint64_t __attribute__((weak)) ethosu_address_remap(uint64_t address, int index)
+{
+    (void)(index);
+    return address;
+}
+
+unsigned int __attribute__((weak)) ethosu_config_select(uint64_t address, int index)
+{
+    (void)(address);
+    assert(index >= -1 && index <= 7);
+    switch (index)
+    {
+    case -1:
+        return NPU_QCONFIG;
+    default:
+    case 0:
+        return NPU_REGIONCFG_0;
+    case 1:
+        return NPU_REGIONCFG_1;
+    case 2:
+        return NPU_REGIONCFG_2;
+    case 3:
+        return NPU_REGIONCFG_3;
+    case 4:
+        return NPU_REGIONCFG_4;
+    case 5:
+        return NPU_REGIONCFG_5;
+    case 6:
+        return NPU_REGIONCFG_6;
+    case 7:
+        return NPU_REGIONCFG_7;
+    }
+}
+
+bool ethosu_dev_init(struct ethosu_device *dev, void *base_address, uint32_t secure_enable, uint32_t privilege_enable)
+{
     dev->reg        = (volatile struct NPU_REG *)base_address;
     dev->secure     = secure_enable;
     dev->privileged = privilege_enable;
@@ -69,34 +108,25 @@ struct ethosu_device *ethosu_dev_init(const void *base_address, uint32_t secure_
 #endif
     {
         LOG_ERR("Failed to initialize device. Driver has not been compiled for this product");
-        goto err;
+        return false;
     }
 
     // Make sure the NPU is in a known state
     if (ethosu_dev_soft_reset(dev) != ETHOSU_SUCCESS)
     {
-        goto err;
+        return false;
     }
 
-    return dev;
-
-err:
-    free(dev);
-    return NULL;
-}
-
-void ethosu_dev_deinit(struct ethosu_device *dev)
-{
-    free(dev);
+    return true;
 }
 
 enum ethosu_error_codes ethosu_dev_axi_init(struct ethosu_device *dev)
 {
     struct regioncfg_r rcfg = {0};
-    struct axi_limit0_r l0  = {0};
-    struct axi_limit1_r l1  = {0};
-    struct axi_limit2_r l2  = {0};
-    struct axi_limit3_r l3  = {0};
+    struct axi_limit0_r l0 = {0};
+    struct axi_limit1_r l1 = {0};
+    struct axi_limit2_r l2 = {0};
+    struct axi_limit3_r l3 = {0};
 
     dev->reg->QCONFIG.word = NPU_QCONFIG;
 
@@ -147,19 +177,19 @@ void ethosu_dev_run_command_stream(struct ethosu_device *dev,
     assert(num_base_addr <= NPU_REG_BASEP_ARRLEN);
 
     struct cmd_r cmd;
-    uint64_t qbase = (uintptr_t)cmd_stream_ptr + BASE_POINTER_OFFSET;
+    uint64_t qbase          = ethosu_address_remap((uintptr_t)cmd_stream_ptr, -1);
     assert(qbase <= ADDRESS_MASK);
-    LOG_DEBUG("QBASE=0x%016llx, QSIZE=%u, base_pointer_offset=0x%08x", qbase, cms_length, BASE_POINTER_OFFSET);
+    LOG_DEBUG("QBASE=0x%016llx, QSIZE=%" PRIu32 ", cmd_stream_ptr=%p", qbase, cms_length, cmd_stream_ptr);
 
     dev->reg->QBASE.word[0] = qbase & 0xffffffff;
 #ifdef ETHOSU65
     dev->reg->QBASE.word[1] = qbase >> 32;
 #endif
-    dev->reg->QSIZE.word = cms_length;
+    dev->reg->QSIZE.word   = cms_length;
 
     for (int i = 0; i < num_base_addr; i++)
     {
-        uint64_t addr = base_addr[i] + BASE_POINTER_OFFSET;
+        uint64_t addr = ethosu_address_remap(base_addr[i], i);
         assert(addr <= ADDRESS_MASK);
         LOG_DEBUG("BASEP%d=0x%016llx", i, addr);
         dev->reg->BASEP[i].word[0] = addr & 0xffffffff;
@@ -172,14 +202,12 @@ void ethosu_dev_run_command_stream(struct ethosu_device *dev,
     cmd.transition_to_running_state = 1;
 
     dev->reg->CMD.word = cmd.word;
-    LOG_DEBUG("CMD=0x%08x", cmd.word);
-
-    LOG_INFO("Test Case 6: transition_to_running_state %u", cmd.transition_to_running_state);
+    LOG_DEBUG("CMD=0x%08" PRIx32, cmd.word);
 }
 
 void ethosu_dev_print_err_status(struct ethosu_device *dev)
 {
-    LOG_ERR("NPU status=0x%08" PRIx32 ", qread=%" PRIu32 ", cmd_end_reached=%d",
+    LOG_ERR("NPU status=0x%08" PRIx32 ", qread=%" PRIu32 ", cmd_end_reached=%u",
             dev->reg->STATUS.word,
             dev->reg->QREAD.word,
             dev->reg->STATUS.cmd_end_reached);
@@ -193,20 +221,6 @@ bool ethosu_dev_handle_interrupt(struct ethosu_device *dev)
     cmd.word           = dev->reg->CMD.word & NPU_CMD_PWR_CLK_MASK;
     cmd.clear_irq      = 1;
     dev->reg->CMD.word = cmd.word;
-
-    LOG_INFO("Test Case 10: bus_status_error 0x%x, status 0x%x",
-	     dev->reg->STATUS.bus_status, dev->reg->STATUS.word);
-    if (dev->reg->STATUS.bus_status == 1) {
-        LOG_INFO("Test Case 10: faulting_inference 0x%x", dev->reg->STATUS.faulting_interface);
-	LOG_INFO("Test Case 10: faulting_channel 0x%x", dev->reg->STATUS.faulting_channel);
-    }
-    LOG_INFO("Test Case 11: cmd_parse_error 0x%x", dev->reg->STATUS.cmd_parse_error);
-    LOG_INFO("Test Case 12: wd_fault 0x%x", dev->reg->STATUS.wd_fault);
-    LOG_INFO("Test Case 13: ecc_fault: 0x%x", dev->reg->STATUS.ecc_fault);
-    LOG_INFO("Test Case 9: dma read/write to external memory");
-    LOG_INFO("Test Case 14: cmd_end_reached 0x%x", dev->reg->STATUS.cmd_end_reached);
-    LOG_INFO("Test Case 14: get read offset of command stream %lu",
-	   dev->reg->QREAD.word);
 
     // If a fault has occured, the NPU needs to be reset
     if (dev->reg->STATUS.bus_status || dev->reg->STATUS.cmd_parse_error || dev->reg->STATUS.wd_fault ||
@@ -241,7 +255,6 @@ enum ethosu_error_codes ethosu_dev_soft_reset(struct ethosu_device *dev)
 
     // Reset and set security level
     LOG_INFO("Soft reset NPU");
-    LOG_INFO("Test Case 7: soft reset NPU");
     dev->reg->RESET.word = reset.word;
 
     // Wait until reset status indicates that reset has been completed
@@ -255,8 +268,6 @@ enum ethosu_error_codes ethosu_dev_soft_reset(struct ethosu_device *dev)
         return ETHOSU_GENERIC_FAILURE;
     }
 
-    LOG_INFO("Test Case 15: reset.pending_CPL 0x%x", reset.pending_CPL);
-    LOG_INFO("Test Case 15: reset.pending_CSL 0x%x", reset.pending_CSL);
     // Verify that NPU has switched security state and privilege level
     if (ethosu_dev_verify_access_state(dev) != true)
     {
@@ -289,17 +300,6 @@ void ethosu_dev_get_hw_info(struct ethosu_device *dev, struct ethosu_hw_info *hw
     hwinfo->version.version_major  = id.version_major;
     hwinfo->version.version_minor  = id.version_minor;
     hwinfo->version.version_status = id.version_status;
-
-    /* Test Case 1-2 */
-    LOG_INFO("Test Case 1-2: id.arch_major_rev %lu", id.arch_major_rev);
-    LOG_INFO("Test Case 1-2: id.arch_minor_rev %lu", id.arch_minor_rev);
-    LOG_INFO("Test Case 1-2: id.arch_patch_rev %lu", id.arch_patch_rev);
-    LOG_INFO("Test Case 1-2: id.version_major %lu", id.version_major);
-    LOG_INFO("Test Case 1-2: id.version_minor %lu", id.version_minor);
-    LOG_INFO("Test Case 1-2: id.version_status %lu", id.version_status);
-    LOG_INFO("Test Case 3: config.macs_per_cc %lu", cfg.macs_per_cc);
-    LOG_INFO("Test Case 3: config.cmd_stream_verison %lu", cfg.cmd_stream_version);
-    LOG_INFO("Test Case 3: config.shram_size %lu", cfg.shram_size);
 }
 
 enum ethosu_error_codes ethosu_dev_set_clock_and_power(struct ethosu_device *dev,
@@ -319,10 +319,8 @@ enum ethosu_error_codes ethosu_dev_set_clock_and_power(struct ethosu_device *dev
     }
 
     dev->reg->CMD.word = cmd.word;
-    LOG_DEBUG("CMD=0x%08x", cmd.word);
+    LOG_DEBUG("CMD=0x%08" PRIx32, cmd.word);
 
-    LOG_INFO("Test Case 4: power_q_enable 0x%x", cmd.power_q_enable);
-    LOG_INFO("Test Case 5: clock_q_enable 0x%x", cmd.clock_q_enable);
     return ETHOSU_SUCCESS;
 }
 
@@ -337,35 +335,35 @@ bool ethosu_dev_verify_optimizer_config(struct ethosu_device *dev, uint32_t cfg_
     hw_cfg.word = dev->reg->CONFIG.word;
     hw_id.word  = dev->reg->ID.word;
 
-    LOG_INFO("Optimizer config. product=%d, cmd_stream_version=%d, macs_per_cc=%d, shram_size=%d, custom_dma=%d",
+    LOG_INFO("Optimizer config. product=%u, cmd_stream_version=%u, macs_per_cc=%u, shram_size=%u, custom_dma=%u",
              opt_cfg->product,
              opt_cfg->cmd_stream_version,
              opt_cfg->macs_per_cc,
              opt_cfg->shram_size,
              opt_cfg->custom_dma);
-    LOG_INFO("Optimizer config. arch version: %d.%d.%d",
+    LOG_INFO("Optimizer config. arch version: %u.%u.%u",
              opt_id->arch_major_rev,
              opt_id->arch_minor_rev,
              opt_id->arch_patch_rev);
-    LOG_INFO("Ethos-U config. product=%d, cmd_stream_version=%d, macs_per_cc=%d, shram_size=%d, custom_dma=%d",
+    LOG_INFO("Ethos-U config. product=%u, cmd_stream_version=%u, macs_per_cc=%u, shram_size=%u, custom_dma=%u",
              hw_cfg.product,
              hw_cfg.cmd_stream_version,
              hw_cfg.macs_per_cc,
              hw_cfg.shram_size,
              hw_cfg.custom_dma);
-    LOG_INFO("Ethos-U. arch version=%d.%d.%d", hw_id.arch_major_rev, hw_id.arch_minor_rev, hw_id.arch_patch_rev);
+    LOG_INFO("Ethos-U. arch version=%u.%u.%u", hw_id.arch_major_rev, hw_id.arch_minor_rev, hw_id.arch_patch_rev);
 
     if (opt_cfg->word != hw_cfg.word)
     {
         if (hw_cfg.product != opt_cfg->product)
         {
-            LOG_ERR("NPU config mismatch. npu.product=%d, optimizer.product=%d", hw_cfg.product, opt_cfg->product);
+            LOG_ERR("NPU config mismatch. npu.product=%u, optimizer.product=%u", hw_cfg.product, opt_cfg->product);
             ret = false;
         }
 
         if (hw_cfg.macs_per_cc != opt_cfg->macs_per_cc)
         {
-            LOG_ERR("NPU config mismatch. npu.macs_per_cc=%d, optimizer.macs_per_cc=%d",
+            LOG_ERR("NPU config mismatch. npu.macs_per_cc=%u, optimizer.macs_per_cc=%u",
                     hw_cfg.macs_per_cc,
                     opt_cfg->macs_per_cc);
             ret = false;
@@ -373,7 +371,7 @@ bool ethosu_dev_verify_optimizer_config(struct ethosu_device *dev, uint32_t cfg_
 
         if (hw_cfg.cmd_stream_version != opt_cfg->cmd_stream_version)
         {
-            LOG_ERR("NPU config mismatch. npu.cmd_stream_version=%d, optimizer.cmd_stream_version=%d",
+            LOG_ERR("NPU config mismatch. npu.cmd_stream_version=%u, optimizer.cmd_stream_version=%u",
                     hw_cfg.cmd_stream_version,
                     opt_cfg->cmd_stream_version);
             ret = false;
@@ -381,18 +379,16 @@ bool ethosu_dev_verify_optimizer_config(struct ethosu_device *dev, uint32_t cfg_
 
         if (!hw_cfg.custom_dma && opt_cfg->custom_dma)
         {
-            LOG_ERR("NPU config mismatch. npu.custom_dma=%d, optimizer.custom_dma=%d",
+            LOG_ERR("NPU config mismatch. npu.custom_dma=%u, optimizer.custom_dma=%u",
                     hw_cfg.custom_dma,
                     opt_cfg->custom_dma);
             ret = false;
         }
     }
-    if (ret == true)
-	LOG_INFO("Test Case 16: handle_optimizer_config: NPU config match");
 
     if ((hw_id.arch_major_rev != opt_id->arch_major_rev) || (hw_id.arch_minor_rev < opt_id->arch_minor_rev))
     {
-        LOG_ERR("NPU arch mismatch. npu.arch=%d.%d.%d, optimizer.arch=%d.%d.%d",
+        LOG_ERR("NPU arch mismatch. npu.arch=%u.%u.%u, optimizer.arch=%u.%u.%u",
                 hw_id.arch_major_rev,
                 hw_id.arch_minor_rev,
                 hw_id.arch_patch_rev,
@@ -401,8 +397,6 @@ bool ethosu_dev_verify_optimizer_config(struct ethosu_device *dev, uint32_t cfg_
                 opt_id->arch_patch_rev);
         ret = false;
     }
-    if (ret == true)
-        LOG_INFO("Test Case 17: handle_optimizer_config: NPU arch match");
 
     return ret;
 }

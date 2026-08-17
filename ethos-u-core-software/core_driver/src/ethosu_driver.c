@@ -242,6 +242,7 @@ int __attribute__((weak)) ethosu_semaphore_take(void *sem, uint64_t timeout)
     while (s->count == 0)
     {
         __WFE();
+        __asm volatile("" ::: "memory");
         // Baremetal pseudo-example check if timeout triggered:
         // if (SEV_timer_triggered()) {
         //     return -1;

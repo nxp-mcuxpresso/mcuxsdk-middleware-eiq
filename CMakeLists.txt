@@ -25,7 +25,7 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.neutron)
   mcux_add_library(
     LIBS neutron/mcxn/libNeutronDriver.a neutron/mcxn/libNeutronFirmware.a
     TOOLCHAINS armgcc mcux mdk iar
-    DEVICE_IDS MCXN947 MCXN547
+    DEVICE_IDS MCXN947 MCXN947T MCXN547
     )
   mcux_add_library(
     LIBS neutron/rt700/cm33/libNeutronDriver.a neutron/rt700/cm33/libNeutronFirmware.a
@@ -68,7 +68,7 @@ if(CONFIG_MCUX_PRJSEG_middleware.eiq.neutron)
   mcux_add_library(
     LIBS neutron/mcxn/libNeutronDriver.a neutron/mcxn/libNeutronFirmware.a
     TOOLCHAINS armgcc mcux mdk iar
-    DEVICE_IDS MCXN947 MCXN547
+    DEVICE_IDS MCXN947 MCXN947T MCXN547
     )
   mcux_add_library(
     LIBS neutron/rt700/cm33/libNeutronDriver.a neutron/rt700/cm33/libNeutronFirmware.a

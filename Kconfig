@@ -4,5 +4,5 @@ menu "eIQ"
     config MCUX_PRJSEG_middleware.eiq.neutron
         bool "Stage neutron sources/libs into freestanding"
     rsource "./**/Kconfig"
-    osource "middleware/eiq/executorch/examples/nxp/runtime/imxrt700/Kconfig"
+    rsource "./executorch_build/executorch.Kconfig"
 endmenu

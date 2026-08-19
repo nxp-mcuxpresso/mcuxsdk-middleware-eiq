@@ -1,0 +1,23 @@
+# Copyright 2026 NXP
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# ExecuTorch component options (sourced from middleware/eiq/Kconfig).
+
+menu "ExecuTorch"
+    config MCUX_COMPONENT_middleware.eiq.executorch
+        bool "Enable ExecuTorch"
+    config MCUX_COMPONENT_middleware.eiq.executorch.binary
+        bool "Use ExecuTorch prebuilt runtime library (libexecutorch.a)"
+        select MCUX_COMPONENT_middleware.eiq.executorch
+    config MCUX_COMPONENT_middleware.eiq.executorch.neutron
+        bool "Enable Neutron delegate"
+        select MCUX_COMPONENT_middleware.eiq.executorch
+    # Pack-only: ships the ExecuTorch runtime source into the SDK package for
+    # reference / source-level rebuild. These sources are NOT compiled into the
+    # example -- the runtime always comes from the prebuilt libexecutorch.a
+    # (rebuild it with build_executorch_runtime.sh).
+    config MCUX_COMPONENT_middleware.eiq.executorch.source
+        bool "Ship ExecuTorch runtime source (pack-only, for reference/rebuild)"
+        select MCUX_COMPONENT_middleware.eiq.executorch
+endmenu

@@ -47,5 +47,6 @@ if(CONFIG_MCUX_COMPONENT_middleware.eiq.ethosu.core_driver)
             core_driver/src/ethosu_config_u85.h
             core_driver/src/ethosu_device_u85.c
     DEVICE_IDS IMXRTL3759AAAxxxx
+    DEVICE_IDS IMXRTL3759MCAxxxx
     )
 endif()

@@ -231,6 +231,11 @@ if [[ "${PROFILE}" -eq 1 ]]; then
     "${ET_ROOT}/third-party/flatcc/lib/libflatccrt.a"
   )
   PREFIXES+=("etdump_" "flatccrt_")
+  # The host-built flatcc_ep also writes libflatccrt.a to this path, so the
+  # cross-compiled flatccrt target can look up-to-date and never relink, which
+  # merges host objects into the target .a. Force a relink.
+  rm -f "${ET_ROOT}/third-party/flatcc/lib/libflatccrt.a"
+  cmake --build "${BUILD}" --target flatccrt
 fi
 
 mkdir -p "${OUT_DIR}"
